@@ -30,7 +30,7 @@ export const getDatabase = async () => {
 
       await connection.query(`
         CREATE TABLE IF NOT EXISTS \`users\` (
-            id VARCHAR(255) PRIMARY KEY,
+            id INT NOT NULL AUTO_INCREMENT,
             username VARCHAR(255) NOT NULL,
             email TEXT,
             password TEXT
@@ -39,7 +39,7 @@ export const getDatabase = async () => {
 
       await connection.query(`
         CREATE TABLE IF NOT EXISTS pages (
-          id VARCHAR(255) PRIMARY KEY,
+          id INT NOT NULL AUTO_INCREMENT,
           name VARCHAR(255) NOT NULL,
           user_id VARCHAR(255)
         );`);

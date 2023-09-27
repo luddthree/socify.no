@@ -3,20 +3,24 @@
 // add password and username to database
 const username = ref("")
 const password = ref("")
+const email = ref("")
 
 const signup = async () => {
+    console.log(username.value, password.value);
     if (username.value == "") return;
     if (password.value == "") return;
+    if (email.value == "") return;
 
-    const user = await $fetch('/api/bookmarks/create', {
+    const user = await $fetch('/api/user/create', {
         method: 'post',
         body: {
-            username: username.value,
+            name: username.value,
             password: password.value,
+            email: email.value
         }});
 
-    username.value = "sd";
-    password.value = "sd";
+    //username.value = "";
+    //password.value = "";
 }
 </script>
 
@@ -31,10 +35,17 @@ const signup = async () => {
                     placeholder="Username"
                 />
                 <input
-                    type="text"
+                    type="email"
+                    v-model="email"
+                    placeholder="emaiol"
+                />
+                
+                <input
+                    type="password"
                     v-model="password"
                     placeholder="Password"
                 />
+                
                 <button @click="signup">Sign up</button>
             </div>
         </div>
