@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 const newBookmark = ref("")
+const message = ref("")
 
 const { pending, data: bookmarks } = useAsyncData(async () =>
   $fetch("/api/bookmarks"))
 
 const addBookmark = async () => {
+  message.value = "";
 if (bookmarks.value == null) return;
 if (newBookmark.value == "") return;
 
@@ -25,12 +27,15 @@ const deleteBookmark = async (id: string) => {
   if (bookmarks.value == null) return;
   if (id == "") return;
 
-  await $fetch('/api/bookmarks/delete', {
+  const response = await $fetch('/api/bookmarks/delete', {
     method: 'post',
     body: {
       id: id,
     }
   });
+
+  // display response.message somehow
+  message.value = response.message;
 
   bookmarks.value = bookmarks.value.filter(bookmark => bookmark.id !== id);
 }
@@ -46,7 +51,7 @@ const deleteBookmark = async (id: string) => {
       </form>
 
       <!-- <div>{{ newBookmark }}</div> -->
-
+      <div v-if="message">{{ message }}</div>
     <div v-if="pending">Loading...</div>
 
     <div v-else-if="bookmarks && bookmarks.length > 0">

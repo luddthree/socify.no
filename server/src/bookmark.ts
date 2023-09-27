@@ -1,81 +1,99 @@
-import { DatabaseConnection, sql } from '@databases/sqlite';
-import {randomUUID} from 'node:crypto';
-import z, { date } from 'zod';
-import {generateIconURL} from './utils'
+import { Pool, PoolConnection, createPool } from 'mysql2/promise';
+import { randomUUID } from 'node:crypto';
+import z from 'zod';
+import { generateIconURL } from './utils';
 
 interface Bookmark {
-    id: string;
-    url: string;
-    icon_url: string; 
-    icon_version: number;
-    createdAt: Date;
-    updatedAt: Date;
+  id: string;
+  url: string;
+  icon_url: string;
+  icon_version: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface AddOptions {
-    url: string;
+  url: string;
 }
 
 const addOptionsSchema = z.object({
-    url: z.string().url(),
+  url: z.string().url(),
 });
 
-export async function list(db: DatabaseConnection) {
-    return db.query(sql`SELECT * FROM bookmarks3`);
+const pool: Pool = createPool({
+  host: 'localhost',
+  user: 'ludvik',
+  password: 'Password123#@!',
+  database: 'linkbase',
+  connectionLimit: 10, // Adjust as needed
+});
+
+export async function list() {
+  const connection: PoolConnection = await pool.getConnection();
+  try {
+    // @ts-ignore
+    const [ rows ]: Bookmark[] = await connection.query('SELECT * FROM bookmarks');
+    return rows;
+  } finally {
+    connection.release();
+  }
 }
 
-export async function add(db: DatabaseConnection, options: AddOptions) {
-    const params = addOptionsSchema.parse(options);
+export async function add(options: AddOptions) {
+  const params = addOptionsSchema.parse(options);
 
-    const bookmark: Bookmark = {
-        id: randomUUID(),
+  const bookmark: Bookmark = {
+    id: randomUUID(),
+    url: params.url,
+    icon_url: generateIconURL(params.url),
+    icon_version: Math.floor(Date.now() / 1000),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
 
-        url: params.url,
-        icon_url: generateIconURL(params.url),  
-        icon_version: Date.now(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-    };
-    await db.query(sql`INSERT INTO bookmarks3 (
-        id,
-        url,
-        icon_url,
-        icon_version,
-        created_at,
-        updated_at
-    ) VALUES (
-        ${bookmark.id},
-        ${bookmark.url},
-        ${bookmark.icon_url},
-        ${bookmark.icon_version},
-        ${bookmark.createdAt},
-        ${bookmark.updatedAt}
-    );`);
-
+  const connection: PoolConnection = await pool.getConnection();
+  try {
+    await connection.execute(
+      'INSERT INTO bookmarks (id, url, icon_url, icon_version, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)',
+      [
+        bookmark.id,
+        bookmark.url,
+        bookmark.icon_url,
+        bookmark.icon_version,
+        bookmark.createdAt,
+        bookmark.updatedAt,
+      ]
+    );
     return bookmark;
-}   
+  } finally {
+    connection.release();
+  }
+}
 
-interface DeleteOptions { 
-    id: string;
+interface DeleteOptions {
+  id: string;
 }
 
 const deleteOptionsSchema = z.object({
-    id: z.string(),
+  id: z.string(),
 });
 
-export async function deleteBookmark(db: DatabaseConnection, options: DeleteOptions) {
-    const params = deleteOptionsSchema.parse(options);
+export async function deleteBookmark(options: DeleteOptions) {
+  const params = deleteOptionsSchema.parse(options);
 
-    // Validate that the bookmark with the given ID exists before deleting
-    const existingBookmark = await db.query(sql`SELECT id FROM bookmarks3 WHERE id = ${params.id}`);
+  const connection: PoolConnection = await pool.getConnection();
+  try {
+    const [ existingBookmark ] = await connection.query('SELECT id FROM bookmarks WHERE id = ?', [params.id]);
     
+    // @ts-ignore
     if (!existingBookmark[0]) {
-        throw new Error(`Bookmark with ID ${params.id} not found.`);
+      return { message: `Bookmark with ID ${params.id} not found.` };
     }
 
-    // If the bookmark exists, delete it
-    await db.query(sql`DELETE FROM bookmarks3 WHERE id = ${params.id}`);
+    await connection.execute('DELETE FROM bookmarks WHERE id = ?', [params.id]);
 
-    // Return a success message or any other relevant information
     return { message: `Bookmark with ID ${params.id} has been deleted.` };
+  } finally {
+    connection.release();
+  }
 }

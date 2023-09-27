@@ -1,37 +1,56 @@
-import connect, { DatabaseConnection, sql } from "@databases/sqlite"
+import { createPool, Pool, PoolConnection } from "mysql2/promise";
 
-let db: DatabaseConnection;
+let pool: Pool;
 let initialized = false;
 
-export const getDatabase = async (path: string) => {
-    db = db || connect(path);
+export const getDatabase = async () => {
+  if (!pool) {
+    pool = createPool({
+      host: "localhost",
+      user: "ludvik",
+      password: "Password123#@!",
+      database: "linkbase",
+      connectionLimit: 10, // Adjust as needed
+    });
+  }
 
-    if (!initialized) {
-        await db.query(sql`
-            CREATE TABLE IF NOT EXISTS bookmarks3 (
-                id TEXT PRIMARY KEY,
-                url TEXT NOT NULL,
-                icon_url TEXT NOT NULL,
-                icon_version INTEGER NOT NULL,
-                created_at DATETIME DEFAULT CURRENT__DATE,
-                updated_at DATETIME NOT NULL
-            );
+  const connection: PoolConnection = await pool.getConnection();
 
-            CREATE TABLE IF NOT EXISTS users (
-                id TEXT PRIMARY KEY,
-                username VARCHAR NOT NULL,
-                email TEXT,
-                password TEXT,
-            );
+  if (!initialized) {
+    try {
+      await connection.query(`
+        CREATE TABLE IF NOT EXISTS bookmarks (
+            id VARCHAR(255) PRIMARY KEY,
+            url TEXT NOT NULL,
+            icon_url TEXT NOT NULL,
+            icon_version INT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME NOT NULL
+        );`);
 
-            CREATE TABLE IF NOT EXISTS pages (
-                id TEXT PRIMARY KEY,
-                name VARCHAR NOT NULL,
-                user_id VARCHAR,
-            );
+      await connection.query(`
+        CREATE TABLE IF NOT EXISTS \`users\` (
+            id VARCHAR(255) PRIMARY KEY,
+            username VARCHAR(255) NOT NULL,
+            email TEXT,
+            password TEXT
+        );
+      `);
 
-        `);
-        initialized = true;
+      await connection.query(`
+        CREATE TABLE IF NOT EXISTS pages (
+          id VARCHAR(255) PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          user_id VARCHAR(255)
+        );`);
+
+      initialized = true;
+    } catch (error) {
+      console.error("Error initializing database:", error);
+    } finally {
+      connection.release(); // Release the connection back to the pool
     }
-    return db;
+  }
+
+  return pool;
 };
