@@ -26,33 +26,50 @@ const signup = async () => {
 </script>
 
 <template>
-    <div>
-        <!-- input signup username and password into database -->
-        <div class="container">
-            <div class="bookmark-form">
+      <br><br>
+  <div class="flex">
+    <div class="m-2 mx-auto">
+      <div class="bg-gray-200 rounded-2xl px-8 py-2">
+          <br>
+          <div>
+            <div class="flex justify-center text-center">
+              <h1 class="text-center text-2xl font-bold">Sign up</h1>
+            </div><br>
+            <div class="flex justify-center">
+              <div>
                 <input
+                class="rounded py-2 px-3"
                     type="text"
                     v-model="username"
                     placeholder="Username"
-                />
+                /><br><br>
                 <input
-                    type="email"
-                    v-model="email"
-                    placeholder="emaiol"
-                />
-                
-                <input
+                class="rounded py-2 px-3"
                     type="password"
                     v-model="password"
                     placeholder="Password"
-                />
-                
-                <button @click="signup">Sign up</button>
+                /><br><br>
+                <input
+                class="rounded py-2 px-3"
+                    type="email"
+                    v-model="email"
+                    placeholder="email"
+                /><br><br>
+              </div>
             </div>
-        </div>
+            <br>
+            <div class="flex justify-center">
+                  <button class="bg-purple-500 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded" @click="signup">Sign up</button>
+
+
+            </div>
+              <br><br>
+            </div>
+          </div>
+          <br>
+          <div class="text-gray-600 text-sm flex justify-center">
+            <p>Already a member? <b><a href="/login" class="text-gray-700 hover:text-gray-900 text-sm"> log in here!</a></b></p>            </div>
+        <br><br>
+      </div>
     </div>
 </template>
-
-<script lang="ts">
-
-</script>

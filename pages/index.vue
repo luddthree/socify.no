@@ -47,21 +47,22 @@ const deleteBookmark = async (id: string) => {
     <form class="bookmark-form" @submit.prevent>
       <label for="url">Add bookmarks</label>
       <input v-model="newBookmark" type="url" name="url" id="url" required />
-      <button @click="addBookmark">Add</button>
+      <button class="bg-gray-300 hover:bg-gray-400" @click="addBookmark">Add</button>
       </form>
 
       <!-- <div>{{ newBookmark }}</div> -->
       <div v-if="message">{{ message }}</div>
     <div v-if="pending">Loading...</div>
 
-    <div v-else-if="bookmarks && bookmarks.length > 0">
+    <div class="" v-else-if="bookmarks && bookmarks.length > 0">
       <ul>
   <li class="bookmark-list--item" v-for="bookmark in bookmarks" :key="bookmark.id">
     <a class="bookmark-link" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
       <img :src="bookmark.icon_url" />
       {{ bookmark.url }}
     </a>
-    <button @click="deleteBookmark(bookmark.id)">Delete</button>
+    <div>
+    <button class="bg-red-400 hover:bg-red-500 rounded p-0.5 text-xs" @click="deleteBookmark(bookmark.id)">Delete</button></div>
   </li>
 </ul>
 
