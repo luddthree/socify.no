@@ -19,8 +19,9 @@ const signup = async () => {
             email: email.value
         }});
 
-    //username.value = "";
-    //password.value = "";
+    username.value = "";
+    email.value = "";
+    password.value = "";
 }
 </script>
 
