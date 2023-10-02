@@ -5,6 +5,7 @@ import { generateIconURL } from './utils';
 
 interface Bookmark {
   id: string;
+  userId: string,
   url: string;
   icon_url: string;
   icon_version: number;
@@ -13,12 +14,9 @@ interface Bookmark {
 }
 
 interface AddOptions {
-  url: string;
+  url: string
+  userId: string
 }
-
-const addOptionsSchema = z.object({
-  url: z.string().url(),
-});
 
 const pool: Pool = createPool({
   host: 'localhost',
@@ -28,11 +26,11 @@ const pool: Pool = createPool({
   connectionLimit: 10, // Adjust as needed
 });
 
-export async function list() {
+export async function list(userId:string) {
   const connection: PoolConnection = await pool.getConnection();
   try {
     // @ts-ignore
-    const [ rows ]: Bookmark[] = await connection.query('SELECT * FROM bookmarks');
+    const [ rows ]: Bookmark[] = await connection.query('SELECT * FROM bookmarks where userId=' + userId);
     return rows;
   } finally {
     connection.release();
@@ -40,10 +38,11 @@ export async function list() {
 }
 
 export async function add(options: AddOptions) {
-  const params = addOptionsSchema.parse(options);
+  const params = options;
 
   const bookmark: Bookmark = {
     id: randomUUID(),
+    userId: params.userId,
     url: params.url,
     icon_url: generateIconURL(params.url),
     icon_version: Math.floor(Date.now() / 1000),
@@ -54,9 +53,10 @@ export async function add(options: AddOptions) {
   const connection: PoolConnection = await pool.getConnection();
   try {
     await connection.execute(
-      'INSERT INTO bookmarks (id, url, icon_url, icon_version, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)',
+      'INSERT INTO bookmarks (id, userId, url, icon_url, icon_version, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
       [
         bookmark.id,
+        bookmark.userId,
         bookmark.url,
         bookmark.icon_url,
         bookmark.icon_version,

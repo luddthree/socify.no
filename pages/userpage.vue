@@ -1,20 +1,55 @@
 <script lang="ts" setup>
+const newBookmark = ref("")
+const message = ref("")
 
 const { pending, data: bookmarks } = useAsyncData(async () =>
-  $fetch("/api/bookmarks"))
+  $fetch("/api/bookmarks?userId=" + localStorage.getItem('userId')))
 
 const addBookmark = async () => {
   message.value = "";
 if (bookmarks.value == null) return;
 if (newBookmark.value == "") return;
+
+const bookmark = await $fetch('/api/bookmarks/create', {
+  method: 'post',
+  body: {
+    url: newBookmark.value,
+    userId: localStorage.getItem('userId')
+  }});
+
+  bookmarks.value.push(bookmark);
+  newBookmark.value = "";
 }
 
+//function that deletes a bookmark
+const deleteBookmark = async (id: string) => {
+  if (bookmarks.value == null) return;
+  if (id == "") return;
+
+  const response = await $fetch('/api/bookmarks/delete', {
+    method: 'post',
+    body: {
+      id: id,
+    }
+  });
+
+  // display response.message somehow
+  message.value = response.message;
+
+  bookmarks.value = bookmarks.value.filter(bookmark => bookmark.id !== id);
+}
 </script>
 
 
 <template>
   <main class="container">
-   
+    <form class="bookmark-form" @submit.prevent>
+      <label for="url">Add links here</label>
+      <input v-model="newBookmark" type="url" name="url" id="url" required />
+      <button class="bg-gray-300 hover:bg-gray-400" @click="addBookmark">Add</button>
+      </form>
+
+      <!-- <div>{{ newBookmark }}</div> -->
       <div v-if="message">{{ message }}</div>
     <div v-if="pending">Loading...</div>
 
@@ -24,7 +59,10 @@ if (newBookmark.value == "") return;
     <a class="bookmark-link" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
       <img :src="bookmark.icon_url" />
       {{ bookmark.url }}
+      
     </a>
+    <div>
+    <button class="bg-red-400 hover:bg-red-500 rounded p-0.5 text-xs" @click="deleteBookmark(bookmark.id)">Delete</button></div>
   </li>
 </ul>
 

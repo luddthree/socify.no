@@ -5,6 +5,7 @@
                 <NuxtLink to="/" class="font-bold">linktree v2</NuxtLink>
                 <ul class="flex gap-4">
                     <li><NuxtLink to="/">Home</NuxtLink></li>
+                    <li><NuxtLink to="/userpage">Dashboard</NuxtLink></li>
                     <li><NuxtLink to="/login">login</NuxtLink></li>
                     <li><NuxtLink to="/signup" class="btn">signup</NuxtLink></li>
                 </ul>

@@ -96,9 +96,9 @@
         })
 
         if (response) {
-            await navigateTo('/')
             localStorage.setItem('isLoggedIn', true)
-            localStorage.setItem('userId', 1);
+            localStorage.setItem('userId', response.id);
+            await navigateTo('/userpage')
         } else {
             alert("Invalid Login")
         }

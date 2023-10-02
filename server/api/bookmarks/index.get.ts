@@ -1,5 +1,8 @@
 import * as Bookmark from '~/server/src/bookmark';
 
 export default defineEventHandler(async (event) => {
-    return Bookmark.list();
+    const { userId } = getQuery(event) 
+    if (userId){
+    return Bookmark.list(userId.toString());
+    }
 });

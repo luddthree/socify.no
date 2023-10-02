@@ -19,7 +19,9 @@ export default defineEventHandler( async (event) => {
       );
   
       // If a row is found, the login is successful
-      return rows.length > 0;
+      if (rows.length > 0) {
+        return rows[0];
+      }
     } catch (error) {
       console.error('Error checking login:', error);
       return false;

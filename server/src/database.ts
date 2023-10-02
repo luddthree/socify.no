@@ -21,6 +21,7 @@ export const getDatabase = async () => {
       await connection.query(`
         CREATE TABLE IF NOT EXISTS bookmarks (
             id VARCHAR(255) PRIMARY KEY,
+            userId VARCHAR(255),
             url TEXT NOT NULL,
             icon_url TEXT NOT NULL,
             icon_version INT NOT NULL,
