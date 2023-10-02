@@ -59,7 +59,7 @@ const signup = async () => {
             </div>
             <br>
             <div class="flex justify-center">
-                  <button class="bg-purple-500 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded" @click="signup">Sign up</button>
+                  <button class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded" @click="signup">Sign up</button>
 
 
             </div>

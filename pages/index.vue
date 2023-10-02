@@ -45,7 +45,7 @@ const deleteBookmark = async (id: string) => {
 <template>
   <main class="container">
     <form class="bookmark-form" @submit.prevent>
-      <label for="url">Add bookmarks</label>
+      <label for="url">Add links here</label>
       <input v-model="newBookmark" type="url" name="url" id="url" required />
       <button class="bg-gray-300 hover:bg-gray-400" @click="addBookmark">Add</button>
       </form>
