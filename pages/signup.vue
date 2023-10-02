@@ -63,7 +63,7 @@ const signup = async () => {
 
 
             </div>
-              <br><br>
+              <br>
             </div>
           </div>
           <br>
