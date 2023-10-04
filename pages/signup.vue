@@ -22,7 +22,12 @@ const signup = async () => {
     username.value = "";
     email.value = "";
     password.value = "";
+
+    await navigateTo('/login')
+
 }
+
+
 </script>
 
 <template>

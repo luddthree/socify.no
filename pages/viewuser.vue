@@ -2,7 +2,7 @@
 const message = ref("")
 
 const { pending, data: bookmarks } = useAsyncData(async () =>
-  $fetch("/api/bookmarks?userId=" + localStorage.getItem('userId2')))
+  $fetch("/api/bookmarks?userId=" + localStorage.getItem('viewuserId')))
 
 </script>
 

@@ -55,7 +55,7 @@ export default {
       })
 
       if (response) {
-          localStorage.setItem('userId2', response.id);
+          localStorage.setItem('viewuserId', response.id);
           await navigateTo('/viewuser')
       } else {
           alert("username not found")
