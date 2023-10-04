@@ -8,7 +8,7 @@
                     <li><NuxtLink to="/userpage">Dashboard</NuxtLink></li>
                     <li><NuxtLink to="/login">login</NuxtLink></li>
                     <li><NuxtLink to="/signup" class="btn">signup</NuxtLink></li>
-                    <li @click="logout()"><button class="btn bg-red-400 hover:bg-red-500 rounded p-0.5">logout</button></li>
+                    <li @click="logout()"><button class="btn bg-red-400 hover:bg-red-500 rounded p-0.5 px-1">logout</button></li>
 
                 </ul>
             </nav>
