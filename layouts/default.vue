@@ -9,7 +9,7 @@
                     <li><NuxtLink to="/login">login</NuxtLink></li>
                     <li><NuxtLink to="/signup" class="btn">signup</NuxtLink></li>
                     <!-- CREATE Button that runs logout function -->
-                    <li><button @click="logout" class="btn">logout</button></li>
+                    <li @click="logout()"><button class="btn">logout</button></li>
 
                 </ul>
             </nav>
@@ -24,9 +24,14 @@
 <script>
 export default {
   // ... vue component stuff ...
-  logout () {
-    localStorage.clear();
+  methods: {
+    logout() {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('isLoggedIn');
+      this.$router.push('/login');
+    }
   }
+
 }
 
 </script>
