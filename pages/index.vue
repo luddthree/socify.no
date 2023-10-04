@@ -1,97 +1,94 @@
-<script lang="ts" setup>
-
-const { pending, data: bookmarks } = useAsyncData(async () =>
-  $fetch("/api/bookmarks"))
-
-const addBookmark = async () => {
-  message.value = "";
-if (bookmarks.value == null) return;
-if (newBookmark.value == "") return;
-}
-
-</script>
-
-
 <template>
-  <main class="container">
-   
-      <div v-if="message">{{ message }}</div>
-    <div v-if="pending">Loading...</div>
+  <br><br>
+<div class="flex">
+<div class="m-2 mx-auto">
+  <div class="">
+      <br>
+      <div>
+        <div class="flex justify-center text-center">
+          <h1 class="text-center text-2xl font-bold">Search users</h1>
 
-    <div class="" v-else-if="bookmarks && bookmarks.length > 0">
-      <ul>
-  <li class="bookmark-list--item" v-for="bookmark in bookmarks" :key="bookmark.id">
-    <a class="bookmark-link" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
-      <img :src="bookmark.icon_url" />
-      {{ bookmark.url }}
-    </a>
-  </li>
-</ul>
+        </div><br>
+        <form @submit.prevent="searchuser">
+        <div class="flex justify-center">
+          <div>
+              <div class="form-group">
+            <input
+            class="form-control rounded py-3 px-16"
+                type="text"
+                v-model="inputUsername"
+                placeholder="Username"
+            /></div>
+          </div>
+        </div>
+        
+        <div class="flex justify-center">
+              <button type="submit" class="py-3 bg-gray-300 hover:bg-gray-400 px-14">search</button>
 
-    </div>
+        </div>
+          <br><br>
+      </form>
+        </div>
+      </div>
+      <br>
+  </div>
+</div>
 
-    <div v-else>No bookmarks found</div>
-  </main>
+
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      inputUsername: '',
+      loginError: false,
+    };
+  },
+  methods: {
+    async searchuser() {
+      const response = await $fetch('/api/user/search', {
+          method: 'post',
+          body: {
+              name: this.inputUsername,
+          }
+      })
+
+      if (response) {
+          localStorage.setItem('userId2', response.id);
+          await navigateTo('/viewuser')
+      } else {
+          alert("username not found")
+      }
+      
+    },
+  },
+};
+</script>
 
 <style scoped>
-* {
-  font-family: sans-serif;
+.login-container {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.container {
-  max-width: max(95vh, 600px);
-  margin-inline: auto;
+.form-group {
+  margin-bottom: 15px;
 }
 
-
-.container .bookmark-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 50px;
+label {
+  font-weight: bold;
 }
 
-
-.bookmark-form input, .bookmark-form button {
-  padding: 0.5em;
-  width: 300px;
+.input-error {
+  border: 1px solid red;
 }
 
-
-.bookmark-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.bookmark-list--item img{
-  aspect-ratio: 1;
-  width: 24px;
-  height: 24px;
-  border-radius: 100%;
-  transition: all 100ms linear;
-}
-
-.bookmark-list--item {
-  margin-block: 10px;
-}
-
-.bookmark-list--item:hover img {
-  border-radius: 3px;
-  scale: 1.05;
-}
-
-.bookmark-list--item a{
-text-decoration: none;
-font-size: 0.75rem;
-color: rgb(0, 0, 0);
-display: flex;
-align-items: center;
-gap: 10px;
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
 </style>
-
-

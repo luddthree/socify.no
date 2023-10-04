@@ -8,6 +8,9 @@
                     <li><NuxtLink to="/userpage">Dashboard</NuxtLink></li>
                     <li><NuxtLink to="/login">login</NuxtLink></li>
                     <li><NuxtLink to="/signup" class="btn">signup</NuxtLink></li>
+                    <!-- CREATE Button that runs logout function -->
+                    <li><button @click="logout" class="btn">logout</button></li>
+
                 </ul>
             </nav>
         </header>
@@ -17,6 +20,19 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+  // ... vue component stuff ...
+  logout () {
+    localStorage.clear();
+  }
+}
+
+</script>
+
+
+
 
 <style scoped>
     .router-link-exact-active {
