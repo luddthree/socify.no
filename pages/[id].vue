@@ -1,21 +1,59 @@
 <script lang="ts" setup>
+const message = ref("")
 
 const { pending, data: bookmarks } = useAsyncData(async () =>
-  $fetch("/api/bookmarks"))
+  $fetch("/api/bookmarks?userId=" + localStorage.getItem('viewuserId')))
 
-const addBookmark = async () => {
-  message.value = "";
-if (bookmarks.value == null) return;
-if (newBookmark.value == "") return;
+
+
+// Check if the localStorage item "isLoggedIn" is true or false
+function checkIsLoggedInLocalStorage() {
+  if (typeof localStorage === 'undefined') {
+    return null; // localStorage is not available
+  }
+
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+  if (isLoggedIn === "true") {
+    return true;
+  } else if (isLoggedIn === "false") {
+    return false;
+  } else {
+    return null; // The item is not set or has an invalid value
+  }
 }
+
+// Usage example:
+const isLoggedInValue = checkIsLoggedInLocalStorage();
+
+if (isLoggedInValue === true) {
+  console.log("The user is logged in.");
+  setPageLayout('loggedin')
+
+
+  ;} else if (isLoggedInValue === false) {
+  console.log("The user is not logged in.")
+
+} else {
+  console.log("The isLoggedIn in localStorage is not set or has an invalid value.");
+ 
+}
+
+const { id } = useRoute().params
+
+
 
 </script>
 
 
-<template>
 
+
+<template>
   <main class="container">
-   
+
+    <h1 class="text-center text-2xl font-bold">Results for {{ id }}</h1>
+
+      <!-- <div>{{ newBookmark }}</div> -->
       <div v-if="message">{{ message }}</div>
     <div v-if="pending">Loading...</div>
 
@@ -25,6 +63,7 @@ if (newBookmark.value == "") return;
     <a class="bookmark-link" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
       <img :src="bookmark.icon_url" />
       {{ bookmark.url }}
+      
     </a>
   </li>
 </ul>
@@ -60,6 +99,7 @@ if (newBookmark.value == "") return;
   padding: 0.5em;
   width: 300px;
 }
+
 
 .bookmark-list {
   margin: 0;

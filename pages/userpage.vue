@@ -39,6 +39,48 @@ const deleteBookmark = async (id: string) => {
 
   bookmarks.value = bookmarks.value.filter(bookmark => bookmark.id !== id);
 }
+
+
+// Check if the localStorage item "isLoggedIn" is true or false
+function checkIsLoggedInLocalStorage() {
+  if (typeof localStorage === 'undefined') {
+    return null; // localStorage is not available
+  }
+
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+  if (isLoggedIn === "true") {
+    return true;
+  } else if (isLoggedIn === "false") {
+    return false;
+  } else {
+    return null; // The item is not set or has an invalid value
+  }
+}
+
+// Usage example:
+const isLoggedInValue = checkIsLoggedInLocalStorage();
+
+if (isLoggedInValue === true) {
+  console.log("The user is logged in.");
+  setPageLayout('loggedin')
+
+
+  ;} else if (isLoggedInValue === false) {
+  console.log("The user is not logged in.")
+  await navigateTo('/login')
+
+
+} else {
+  console.log("The isLoggedIn in localStorage is not set or has an invalid value.");
+  await navigateTo('/login')
+
+
+}
+
+
+
+
 </script>
 
 

@@ -37,7 +37,7 @@
 
 </template>
 
-<script>
+<script lang="ts">
 export default {
   data() {
     return {
@@ -56,7 +56,9 @@ export default {
 
       if (response) {
           localStorage.setItem('viewuserId', response.id);
-          await navigateTo('/viewuser')
+//naviagte to the username searched
+      await navigateTo('/' + response.name)
+
       } else {
           alert("username not found")
       }
@@ -64,6 +66,44 @@ export default {
     },
   },
 };
+
+</script>
+
+<script lang="ts" setup>
+// Check if the localStorage item "isLoggedIn" is true or false
+function checkIsLoggedInLocalStorage() {
+  if (typeof localStorage === 'undefined') {
+    return null; // localStorage is not available
+  }
+
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+  if (isLoggedIn === "true") {
+    return true;
+  } else if (isLoggedIn === "false") {
+    return false;
+  } else {
+    return null; // The item is not set or has an invalid value
+  }
+}
+
+// Usage example:
+const isLoggedInValue = checkIsLoggedInLocalStorage();
+
+if (isLoggedInValue === true) {
+  console.log("The user is logged in.");
+  setPageLayout('loggedin')
+
+
+  ;} else if (isLoggedInValue === false) {
+  console.log("The user is not logged in.")
+
+} else {
+  console.log("The isLoggedIn in localStorage is not set or has an invalid value.");
+  
+}
+
+
 </script>
 
 <style scoped>
