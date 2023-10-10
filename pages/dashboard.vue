@@ -63,7 +63,6 @@ const isLoggedInValue = checkIsLoggedInLocalStorage();
 
 if (isLoggedInValue === true) {
   console.log("The user is logged in.");
-  setPageLayout('loggedin')
 
 
   ;} else if (isLoggedInValue === false) {
