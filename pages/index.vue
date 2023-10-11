@@ -58,7 +58,7 @@ export default {
           //naviagte to the username searched
           await navigateTo('/' + response.name)
       } else {
-          alert("username not found")
+        await navigateTo('/' + this.inputUsername)
       }
       
     },
@@ -90,7 +90,6 @@ const isLoggedInValue = checkIsLoggedInLocalStorage();
 
 if (isLoggedInValue === true) {
   console.log("The user is logged in.");
-
 
   ;} else if (isLoggedInValue === false) {
   console.log("The user is not logged in.")

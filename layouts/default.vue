@@ -7,7 +7,7 @@
                     <li><NuxtLink to="/">Home</NuxtLink></li>
                     <li v-if="checkIsLoggedInLocalStorage()"><NuxtLink to="/dashboard">Dashboard</NuxtLink></li>
                     <li v-else><NuxtLink to="/login">login</NuxtLink></li>
-                    <li v-if="checkIsLoggedInLocalStorage()" @click="logout()"><button class="btn bg-red-400 hover:bg-red-500 rounded p-0.5 px-1">logout</button></li>
+                    <li v-if="checkIsLoggedInLocalStorage()" @click="logout()"><button class="bg-red-400 hover:bg-red-500 rounded p-0.5 px-1">logout</button></li>
                     <li v-else><NuxtLink to="/signup" class="btn">signup</NuxtLink></li>
 
                 </ul>

@@ -112,7 +112,48 @@ if (isLoggedInValue === true) {
 
     <div v-else>No bookmarks found</div>
   </main>
+
+
+
+  <!-- <div>
+    <div class="container mt-10">
+      <div class="card bg-white">
+        <img style="" :src="image" alt="">
+        <input @change="handleImage" type="file" accept="image/*" class="custom-input">
+      </div>
+    </div>
+  </div> -->
 </template>
+
+<!-- <script lang="ts">
+export default {
+  name: 'home',
+  data() {
+    return {
+      image: ''
+    }
+  },
+  methods: {
+    handleImage(e) {
+      const file = e.target.files[0];
+      this.createBase64Image(file);
+      console.log(file);
+    },
+    createBase64Image(fileObject) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.image = e.target.result;
+        console.log(image);
+      };
+      reader.readAsDataURL(fileObject);
+      
+    },
+  },
+}
+
+</script> -->
+
 
 
 <style scoped>

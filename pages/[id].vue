@@ -8,6 +8,13 @@ const response = await $fetch('/api/user/search', {
     }
 })
 
+
+if (!response) {
+        throw createError({ statusCode: 404, message: 'Username not found', fatal: true})
+    }
+
+
+
 const { pending, data: bookmarks } = useAsyncData(async () =>
   $fetch("/api/bookmarks?userId=" + response.id))
 
@@ -55,13 +62,21 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 <template>
   <main class="container">
 
-    <h1 class="text-center text-2xl font-bold">Results for {{ id }}</h1>
+<!-- put a picture here -->
+<div class="flex justify-center items-center">
+<img class="w-32 h-32 rounded-full overflow-hidden " src="pfp.jpg" alt="">
+</div>
+
+<br>
+    <h1 class="text-center text-2xl font-bold">{{ id }}</h1>
+    <p class="text-xs text-center text-gray-700">no biograpy</p>
+<br>
 
       <!-- <div>{{ newBookmark }}</div> -->
-      <div v-if="message">{{ message }}</div>
-    <div v-if="pending">Loading...</div>
+      <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
+    <div class="flex justify-center items-center" v-if="pending">Loading...</div>
 
-    <div class="" v-else-if="bookmarks && bookmarks.length > 0">
+    <div class="flex justify-center items-center" v-else-if="bookmarks && bookmarks.length > 0">
       <ul>
   <li class="bookmark-list--item" v-for="bookmark in bookmarks" :key="bookmark.id">
     <a class="bookmark-link" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
@@ -74,7 +89,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 
     </div>
 
-    <div v-else>No bookmarks found</div>
+    <div class="flex justify-center items-center" v-else>No bookmarks found</div>
   </main>
 </template>
 
