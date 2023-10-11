@@ -79,7 +79,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
     <div class="flex justify-center items-center" v-else-if="bookmarks && bookmarks.length > 0">
       <ul>
   <li class="bookmark-list--item" v-for="bookmark in bookmarks" :key="bookmark.id">
-    <a class="bookmark-link" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
+    <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm text-white inline-block" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
       <img :src="bookmark.icon_url" />
       {{ bookmark.url }}
       
@@ -128,9 +128,9 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 
 .bookmark-list--item img{
   aspect-ratio: 1;
-  width: 24px;
-  height: 24px;
-  border-radius: 100%;
+  width: 32px;
+  height: 32px;
+  /* border-radius: 100%; */
   transition: all 100ms linear;
 }
 

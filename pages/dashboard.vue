@@ -30,7 +30,6 @@ const deleteBookmark = async (id: string) => {
     method: 'post',
     body: {
       id: id,
-
     }
   });
 
@@ -76,64 +75,77 @@ if (isLoggedInValue === true) {
 
 
 }
-
-
-
-
 </script>
 
 
 <template>
   <main class="container">
     <form class="bookmark-form" @submit.prevent>
+
+      <!-- <div class="flex justify-center items-center">
+          <img class="w-32 h-32 rounded-full overflow-hidden " src="pfp.jpg" alt="">
+      </div> -->
+  <div>
+    <div class="container mt-10">
+      <div class="flex justify-center items-center">
+        <img class="w-32 h-32 rounded-full overflow-hidden" style="" scr="pfp.jpg" :src="image" alt="pfp.jpg">
+        </div><br><div>
+        <input @change="handleImage" type="file" accept="image/*" class="custom-input">
+      </div>
+    </div>
+  </div>
+
+    <br>
+    <!-- display username of user -->
+      <h1 class="text-center text-2xl font-bold">Username</h1>
+      <p class="text-xs text-center text-gray-700">no biograpy</p>
+    <br>
+
       <label for="url">Add links here</label>
       <input v-model="newBookmark" type="url" name="url" id="url" required />
       <button class="bg-gray-300 hover:bg-gray-400" @click="addBookmark">Add</button>
       </form>
-
       <!-- <div>{{ newBookmark }}</div> -->
-      <div v-if="message">{{ message }}</div>
-    <div v-if="pending">Loading...</div>
+      <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
+    <div class="flex justify-center items-center" v-if="pending">Loading...</div>
 
-    <div class="" v-else-if="bookmarks && bookmarks.length > 0">
+    <div class="flex justify-center items-center" v-else-if="bookmarks && bookmarks.length > 0">
       <ul>
   <li class="bookmark-list--item" v-for="bookmark in bookmarks" :key="bookmark.id">
+    <div>
     <a class="bookmark-link" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
       <img :src="bookmark.icon_url" />
-      {{ bookmark.url }}
+      {{ bookmark.url }} 
       
-    </a>
-    <div>
-    <button class="bg-red-400 hover:bg-red-500 rounded p-0.5 text-xs" @click="deleteBookmark(bookmark.id)">Delete</button></div>
-  </li>
+    </a><button class="bg-red-400 hover:bg-red-500 rounded p-0.5 text-xs" @click="deleteBookmark(bookmark.id)">Delete</button>
+    </div>
+    
+     </li>
 </ul>
 
     </div>
 
-    <div v-else>No bookmarks found</div>
+    <div class="flex justify-center items-center" v-else>No bookmarks found</div>
   </main>
-
-
-
-  <!-- <div>
-    <div class="container mt-10">
-      <div class="card bg-white">
-        <img style="" :src="image" alt="">
-        <input @change="handleImage" type="file" accept="image/*" class="custom-input">
-      </div>
-    </div>
-  </div> -->
 </template>
 
-<!-- <script lang="ts">
+<script lang="ts">
 export default {
   name: 'home',
   data() {
     return {
-      image: ''
+      image: '',
+      inputUsername: '',
     }
   },
   methods: {
+    async searchuser() {
+      const usr = await $fetch('/api/user/search', {
+          method: 'post',
+          body: {
+              name: this.inputUsername,
+          }
+      })}  ,
     handleImage(e) {
       const file = e.target.files[0];
       this.createBase64Image(file);
@@ -149,10 +161,9 @@ export default {
       reader.readAsDataURL(fileObject);
       
     },
-  },
-}
+  }}
 
-</script> -->
+</script>
 
 
 
@@ -192,7 +203,7 @@ export default {
   aspect-ratio: 1;
   width: 24px;
   height: 24px;
-  border-radius: 100%;
+  /* border-radius: 100%; */
   transition: all 100ms linear;
 }
 
