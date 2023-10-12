@@ -1,62 +1,89 @@
 <template>
     <div>
-        <header class="shadow-sm bg-white">
+      <!-- Header for mobile devices -->
+      <header class="shadow-sm bg-white sm:hidden">
             <nav class="conatiner mx-auto p-4 flex justify-between">
                 <NuxtLink to="/" class="font-bold">linktree v2</NuxtLink>
-                <ul class="flex gap-4">
+
+                <button @click="toggleMenu" class="hamburger-button trans absolute right-14">{{ isMenuOpen ? '✕' : '☰' }}</button>
+                    <ul class="trans" :class="{ 'active': isMenuOpen }">
+                
+                    <li @click="toggleMenu()" class="mb-4 mt-8"><NuxtLink to="/">Home</NuxtLink></li>
+                    <li @click="toggleMenu()" class="mb-3 bg-gray-300 hover:bg-gray-400 text-black px-3 py-2 rounded-md text-white" v-if="checkIsLoggedInLocalStorage()"><NuxtLink to="/dashboard">Dashboard</NuxtLink></li>
+                    <li @click="toggleMenu()" class="mb-4 mr-14" v-else><NuxtLink to="/login">login</NuxtLink></li>
+                    <li @click="logout()" class="absolute left-4 top-20" v-if="checkIsLoggedInLocalStorage()"><p class="text-s hover:bg-red-700 cursor-pointer rounded p-0.5 px-1">Log out</p></li>
+                    <li @click="toggleMenu()" class="mb-2" v-else><NuxtLink to="/signup" class="btn">signup</NuxtLink></li>
+                
+                    </ul>
+
+            </nav>
+        </header>
+  
+
+      <header class="shadow-sm bg-white hidden sm:flex">
+            <nav class="conatiner mx-auto p-4 flex justify-between">
+                <NuxtLink to="/" class="font-bold left-4 absolute">linktree v2</NuxtLink>
+                <br>
+                <ol class="flex gap-4 right-6 absolute">
                     <li><NuxtLink to="/">Home</NuxtLink></li>
                     <li v-if="checkIsLoggedInLocalStorage()"><NuxtLink to="/dashboard">Dashboard</NuxtLink></li>
                     <li v-else><NuxtLink to="/login">login</NuxtLink></li>
-                    <li v-if="checkIsLoggedInLocalStorage()" @click="logout()"><button class="bg-red-400 hover:bg-red-500 rounded p-0.5 px-1">logout</button></li>
+                    <li v-if="checkIsLoggedInLocalStorage()" @click="logout()"><button class="text-s hover:text-red-700 cursor-pointer rounded">Log out</button></li>
                     <li v-else><NuxtLink to="/signup" class="btn">signup</NuxtLink></li>
 
-                </ul>
+                </ol>
             </nav>
         </header>
-        <div class="conatiner mx-auto p-4">
+
+
+
+    </div>
+    <div class="conatiner mx-auto p-4">
             <slot />
         </div>
-    </div>
-</template>
-
-<script>
-export default {
-  // ... vue component stuff ...
-  methods: {
-    logout() {
-      localStorage.removeItem('userId');
-      localStorage.removeItem('isLoggedIn');
-      this.$router.push('/login');
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        isMenuOpen: false,
+      };
     },
-
-    checkIsLoggedInLocalStorage() {
+    methods: {
+      toggleMenu() {
+        this.isMenuOpen = !this.isMenuOpen;
+      },
+      logout() {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('isLoggedIn');
+        this.$router.push('/');
+        this.isMenuOpen = !this.isMenuOpen;
+      },
+      checkIsLoggedInLocalStorage() {
         if (typeof localStorage === 'undefined') {
-            console.log("localStorage is not available")
-            return null; // localStorage is not available
+          console.log("localStorage is not available");
+          return null;
         }
         const isLoggedIn = localStorage.getItem('isLoggedIn');
-
-        if (isLoggedIn === "true") {
-            console.log("Is logged in")
-            return true;
-        } else{
-            console.log("Is not logged in")
-            return false;
-        } 
-    }
-  }
+        return isLoggedIn === "true";
+      },
+    },
+  };
+  </script>
+  
+  <style scoped>
+  /* .router-link-exact-active {
+      color: navy;
+  } */
+  .hamburger-button {
+  cursor: pointer;
 }
-
-
-
-</script>
-
-
-
-
-
-<style scoped>
-    .router-link-exact-active {
-        color: navy;
-    }
+ul {
+  list-style-type: none;
+  display: none;
+}
+ul.active {
+  display: block;
+}
 </style>

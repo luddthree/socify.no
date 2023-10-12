@@ -12,7 +12,8 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "^6.8.0",
-    "nuxt": "^3.7.3"
+    "nuxt": "^3.7.3",
+    "sass": "^1.69.3"
   },
   "dependencies": {
     "@databases/sqlite": "^4.0.2",

@@ -140,8 +140,10 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 
 .bookmark-list--item:hover img {
   border-radius: 3px;
-  scale: 1.05;
+  scale: 1.15;
+  
 }
+
 
 .bookmark-list--item a{
 text-decoration: none;

@@ -98,6 +98,7 @@
         if (response) {
             localStorage.setItem('isLoggedIn', true)
             localStorage.setItem('userId', response.id);
+            localStorage.setItem('username', this.inputUsername); // Store the username
             await navigateTo('/dashboard')
         } else {
             alert("Invalid Login")
