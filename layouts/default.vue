@@ -57,6 +57,7 @@
       logout() {
         localStorage.removeItem('userId');
         localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('username');
         this.$router.push('/');
         this.isMenuOpen = !this.isMenuOpen;
       },
