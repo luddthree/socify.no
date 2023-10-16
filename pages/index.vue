@@ -1,9 +1,13 @@
 <template>
-  <br><br>
+  <br>
 <div class="flex">
 <div class="m-2 mx-auto">
   <div class="">
-      <br>
+      
+      <div>
+        <p class="text-center">**This website is under development**</p>
+        <br><br>
+      </div>
       <div>
         <div class="flex justify-center text-center">
           <h1 class="text-center text-2xl font-bold">Search users</h1>
