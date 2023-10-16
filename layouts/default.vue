@@ -15,7 +15,6 @@
                     <li @click="toggleMenu()" class="mb-2" v-else><NuxtLink to="/signup" class="btn">signup</NuxtLink></li>
                 
                     </ul>
-
             </nav>
         </header>
   
