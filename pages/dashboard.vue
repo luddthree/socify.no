@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 const newBookmark = ref("")
+const newPage = ref("")
 const message = ref("")
 
 const { pending, data: bookmarks } = useAsyncData(async () =>
   $fetch("/api/bookmarks?userId=" + localStorage.getItem('userId')))
+
+const { data: pages } = useAsyncData(async () =>
+  $fetch("/api/pages?userId=" + localStorage.getItem('userId')))
 
 const addBookmark = async () => {
   message.value = "";
@@ -20,6 +24,40 @@ const addBookmark = async () => {
 
   bookmarks.value.push(bookmark);
   newBookmark.value = "";
+}
+
+const addPages = async () => {
+  message.value = "";
+  if (pages.value == null) return;
+  if (newPage.value == "") return;
+
+  const page = await $fetch('/api/pages/create', {
+    method: 'post',
+    body: {
+      title: newPage.value,
+      user_id: localStorage.getItem('userId')
+    }
+  });
+
+  pages.value.push(page);
+  newPage.value = "";
+}
+
+const deletePage = async (id: string) => {
+  if (pages.value == null) return;
+  if (id == "") return;
+
+  const response = await $fetch('/api/pages/delete', {
+    method: 'post',
+    body: {
+      id: id,
+    }
+  });
+
+  // display response.message somehow
+  // message.value = response.message;
+
+  pages.value = pages.value.filter(page => page.id !== id);
 }
 
 //function that deletes a bookmark
@@ -136,8 +174,42 @@ const storedUsername = localStorage.getItem('username');
       </ul>
 
     </div>
+  
 
     <div class="flex justify-center items-center" v-else>No bookmarks found</div>
+
+<br><br><br>
+  <div>
+    <form class="bookmark-form" @submit.prevent>
+      <input v-model="newPage" type="text" name="newpage" id="newpage" placeholder="Add page here" required />
+      <button class="bg-gray-300 hover:bg-gray-400" @click="addPages">Add</button>
+    </form>
+    <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
+    <div class="flex justify-center items-center" v-if="pending">Loading...</div>
+
+    <div class="flex justify-center items-center" v-else-if="pages && pages.length > 0">
+      <ul>
+        <li class="bookmark-list--item" v-for="page in pages" :key="page.id">
+          <div class="flex">
+            <div class="flex-none w-24 h-14"></div>
+            <div class="flex-initial w-64">
+              <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm text-white inline-block"
+                :href="page" target="_blank" rel="noopener noreferrer">
+                
+                {{ page.title }}
+              </a>
+            </div>
+            <div class="flex-initial w-32">
+              <button class="bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs inline-block"
+                @click="deletePage(page.id)">Delete</button>
+            </div>
+          </div>
+
+        </li>
+      </ul>
+
+    </div>
+</div>
   </main>
 </template>
 

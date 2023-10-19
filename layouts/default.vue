@@ -4,8 +4,8 @@
       <header class="shadow-sm bg-white sm:hidden">
             <nav class="conatiner mx-auto p-4 flex justify-between">
                 <NuxtLink to="/" class="font-bold">linktree v2</NuxtLink>
+                <button @click="toggleMenu" class="hamburger-button trans absolute right-14" style="font-size: 24px;">{{ isMenuOpen ? '✕' : '☰' }}</button>
 
-                <button @click="toggleMenu" class="hamburger-button trans absolute right-14">{{ isMenuOpen ? '✕' : '☰' }}</button>
                     <ul class="trans" :class="{ 'active': isMenuOpen }">
                 
                     <li @click="toggleMenu()" class="mb-4 mt-8"><NuxtLink to="/">Home</NuxtLink></li>
