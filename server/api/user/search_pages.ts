@@ -14,8 +14,8 @@ export default defineEventHandler( async (event) => {
     try {
       // Query the database to check if the username and password match
       const [rows] = await connection.execute(
-        'SELECT * FROM user WHERE name = ?',
-        [body.name]
+        'SELECT * FROM pages WHERE title = ?',
+        [body.title]
       );
   
       // If a row is found, the login is successful

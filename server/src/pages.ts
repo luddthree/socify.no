@@ -39,27 +39,34 @@ export async function list(user_id:number) {
 export async function addpage(options: AddOptions) {
   const params = options;
 
+  if (!params.slug || params.slug.trim() === '') {
+    params.slug = generateDefaultSlug(); 
+  }
+
   const page: Page = {
     user_id: params.user_id,
     title: params.title,
-    slug: params.slug,  
+    slug: params.slug,
   };
 
   const connection: PoolConnection = await pool.getConnection();
   try {
-    connection.execute(
+    await connection.query(
       'INSERT INTO pages (user_id, title, slug) VALUES (?, ?, ?)',
-      [
-        page.user_id,
-        page.title,
-        page.slug,
-      ]
+      [page.user_id, page.title, page.slug]
     );
+
     return page;
   } finally {
     connection.release();
   }
 }
+
+function generateDefaultSlug() {
+  return 'test'; 
+}
+
+ 
 
 interface DeleteOptions {
   id: number;

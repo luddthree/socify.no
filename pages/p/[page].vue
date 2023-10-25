@@ -1,58 +1,24 @@
 <script lang="ts" setup>
 const message = ref("")
-const { id } = useRoute().params
-const response = await $fetch('/api/user/search', {
+const { page } = useRoute().params
+const response = await $fetch('/api/user/search_pages', {
     method: 'post',
     body: {
-        name: id,
+        title: page,
     }
 })
 
 
+
 if (!response) {
-        throw createError({ statusCode: 404, message: 'Username not found', fatal: true})
+        throw createError({ statusCode: 404, message: 'page not found', fatal: true})
     }
 
 
 
 const { pending, data: bookmarks } = useAsyncData(async () =>
-  $fetch("/api/bookmarks?userId=" + response.id))
+  $fetch("/api/pagelinks?userId=" + response.page))
 
-
-
-
-// Check if the localStorage item "isLoggedIn" is true or false
-// function checkIsLoggedInLocalStorage() {
-//   if (typeof localStorage === 'undefined') {
-//     return null; // localStorage is not available
-//   }
-
-//   const isLoggedIn = localStorage.getItem('isLoggedIn');
-
-//   if (isLoggedIn === "true") {
-//     return true;
-//   } else if (isLoggedIn === "false") {
-//     return false;
-//   } else {
-//     return null; // The item is not set or has an invalid value
-//   }
-// }
-
-// // Usage example:
-// const isLoggedInValue = checkIsLoggedInLocalStorage();
-
-// if (isLoggedInValue === true) {
-//   console.log("The user is logged in.");
-//   setPageLayout('loggedin')
-
-
-//   ;} else if (isLoggedInValue === false) {
-//   console.log("The user is not logged in.")
-
-// } else {
-//   console.log("The isLoggedIn in localStorage is not set or has an invalid value.");
- 
-// }
 
 </script>
 
@@ -65,7 +31,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 </div>
 
 <br>
-    <h1 class="text-center text-2xl font-bold">{{ id }}</h1>
+    <h1 class="text-center text-2xl font-bold">{{ page }}</h1>
     <p class="text-xs text-center text-gray-700">no biograpy</p>
 <br>
 
@@ -74,21 +40,63 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
     <div class="flex justify-center items-center" v-if="pending">Loading...</div>
 
     <div class="flex justify-center items-center" v-else-if="bookmarks && bookmarks.length > 0">
-      <ul>
+      <ol>
   <li class="bookmark-list--item" v-for="bookmark in bookmarks" :key="bookmark.id">
-    <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm text-white inline-block" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
-      <img :src="bookmark.icon_url" />
-      {{ bookmark.url }}
-      
-    </a>
+    <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm text-white inline-block"
+                :href="bookmark.url" target="_blank" rel="noopener noreferrer">
+                <img :src="bookmark.icon_url" />
+                {{ bookmark.url }}
+              </a>
   </li>
-</ul>
+</ol>
 
     </div>
 
     <div class="flex justify-center items-center" v-else>No bookmarks found</div>
   </main>
 </template>
+
+<script lang="ts">
+export default {
+  name: 'home',
+  data() {
+    return {
+      image: '',
+      inputUsername: '',
+      isMenuOpen: false,
+    }
+  },
+
+  methods: {
+    toggleMenu() {
+        this.isMenuOpen = !this.isMenuOpen;
+      },
+    async searchuser() {
+      const usr = await $fetch('/api/user/search', {
+        method: 'post',
+        body: {
+          name: this.inputUsername,
+        }
+      })
+    },
+    handleImage(e) {
+      const file = e.target.files[0];
+      this.createBase64Image(file);
+      console.log(file);
+    },
+    createBase64Image(fileObject) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.image = e.target.result;
+        console.log(image);
+      };
+      reader.readAsDataURL(fileObject);
+
+    },
+  }
+}
+</script>
 
 
 <style scoped>

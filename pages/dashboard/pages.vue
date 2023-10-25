@@ -1,10 +1,13 @@
 <script lang="ts" setup>
+
+import { ref } from 'vue';
+
 const newBookmark = ref("")
 const newPage = ref("")
 const message = ref("")
 
 const { pending, data: bookmarks } = useAsyncData(async () =>
-  $fetch("/api/bookmarks?userId=" + localStorage.getItem('userId')))
+  $fetch("/api/pagelinks?userId=" + localStorage.getItem('userId')))
 
 const { data: pages } = useAsyncData(async () =>
   $fetch("/api/pages?userId=" + localStorage.getItem('userId')))
@@ -14,7 +17,7 @@ const addBookmark = async () => {
   if (bookmarks.value == null) return;
   if (newBookmark.value == "") return;
 
-  const bookmark = await $fetch('/api/bookmarks/create', {
+  const bookmark = await $fetch('/api/pagelinks/create', {
     method: 'post',
     body: {
       url: newBookmark.value,
@@ -47,17 +50,30 @@ const deletePage = async (id: string) => {
   if (pages.value == null) return;
   if (id == "") return;
 
-  const response = await $fetch('/api/pages/delete', {
-    method: 'post',
-    body: {
-      id: id,
-    }
-  });
+  // Ensure that id is a valid number
+  if (isNaN(id)) {
+    console.error('Invalid page ID provided.');
+    return;
+  }
 
-  // display response.message somehow
-  // message.value = response.message;
+  try {
+    // Call the deletePage function with the validated page ID
+    const response = await $fetch('/api/pages/delete', {
+      method: 'post',
+      body: {
+        id: id,
+      },
+    });
 
-  pages.value = pages.value.filter(page => page.id !== id);
+    // Display response.message somehow
+    // message.value = response.message;
+
+    // Remove the deleted page from the pages list
+    pages.value = pages.value.filter((page) => page.id !== id);
+  } catch (error) {
+    console.error('Error deleting page:', error);
+    // Handle the error and show an error message to the user
+  }
 }
 
 //function that deletes a bookmark
@@ -65,7 +81,7 @@ const deleteBookmark = async (id: string) => {
   if (bookmarks.value == null) return;
   if (id == "") return;
 
-  const response = await $fetch('/api/bookmarks/delete', {
+  const response = await $fetch('/api/pagelinks/delete', {
     method: 'post',
     body: {
       id: id,
@@ -80,7 +96,7 @@ const deleteBookmark = async (id: string) => {
 
 
 // Check if the localStorage item "isLoggedIn" is true or false
-function checkIsLoggedInLocalStorage() {
+function checkIsLoggedInLocalStorage () {
   if (typeof localStorage === 'undefined') {
     return null; // localStorage is not available
   }
@@ -95,6 +111,10 @@ function checkIsLoggedInLocalStorage() {
     return null; // The item is not set or has an invalid value
   }
 }
+
+
+
+
 
 // Usage example:
 const isLoggedInValue = checkIsLoggedInLocalStorage();
@@ -141,7 +161,7 @@ const storedUsername = localStorage.getItem('username');
 
       <br>
       <!-- display username of user -->
-      <h1 class="text-center text-2xl font-bold">{{ storedUsername }}</h1>
+      <h1 class="text-center text-2xl font-bold">{{ storedUsername }}'s page</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
       <br>
 
@@ -153,7 +173,7 @@ const storedUsername = localStorage.getItem('username');
     <div class="flex justify-center items-center" v-if="pending">Loading...</div>
 
     <div class="flex justify-center items-center" v-else-if="bookmarks && bookmarks.length > 0">
-      <ul>
+      <ol>
         <li class="bookmark-list--item" v-for="bookmark in bookmarks" :key="bookmark.id">
           <div class="flex">
             <div class="flex-none w-24 h-14"></div>
@@ -171,7 +191,7 @@ const storedUsername = localStorage.getItem('username');
           </div>
 
         </li>
-      </ul>
+      </ol>
 
     </div>
   
@@ -179,37 +199,6 @@ const storedUsername = localStorage.getItem('username');
     <div class="flex justify-center items-center" v-else>No bookmarks found</div>
 
 <br><br><br>
-  <div>
-    <form class="bookmark-form" @submit.prevent>
-      <input v-model="newPage" type="text" name="newpage" id="newpage" placeholder="Add page here" required />
-      <button class="bg-gray-300 hover:bg-gray-400" @click="addPages">Add</button>
-    </form>
-    <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
-    <div class="flex justify-center items-center" v-if="pending">Loading...</div>
-
-    <div class="flex justify-center items-center" v-else-if="pages && pages.length > 0">
-      <ul>
-        <li class="bookmark-list--item" v-for="page in pages" :key="page.id">
-          <div class="flex">
-            <div class="flex-none w-24 h-14"></div>
-            <div class="flex-initial w-64">
-              <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm text-white inline-block"
-                :href="page" target="_blank" rel="noopener noreferrer">
-                
-                {{ page.title }}
-              </a>
-            </div>
-            <div class="flex-initial w-32">
-              <button class="bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs inline-block"
-                @click="deletePage(page.id)">Delete</button>
-            </div>
-          </div>
-
-        </li>
-      </ul>
-
-    </div>
-</div>
   </main>
 </template>
 
@@ -220,9 +209,14 @@ export default {
     return {
       image: '',
       inputUsername: '',
+      isMenuOpen: false,
     }
   },
+
   methods: {
+    toggleMenu() {
+        this.isMenuOpen = !this.isMenuOpen;
+      },
     async searchuser() {
       const usr = await $fetch('/api/user/search', {
         method: 'post',
@@ -251,6 +245,19 @@ export default {
 </script>
 
 <style scoped>
+
+.hamburger-button {
+  cursor: pointer;
+}
+ul {
+  list-style-type: none;
+  display: none;
+}
+ul.active {
+  display: block;
+}
+
+
 * {
   font-family: sans-serif;
 }
