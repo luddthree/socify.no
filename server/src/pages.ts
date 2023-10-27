@@ -36,6 +36,18 @@ export async function list(user_id:number) {
   }
 }
 
+export async function getbyid(id:number) {
+  const connection: PoolConnection = await pool.getConnection();
+  try {
+    // @ts-ignore
+
+    const  page : Page = await connection.query('SELECT * FROM pages where id=' + id);
+    return page;
+  } finally {
+    connection.release();
+  }
+}
+
 export async function addpage(options: AddOptions) {
   const params = options;
 

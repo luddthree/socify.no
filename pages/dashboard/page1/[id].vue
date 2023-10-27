@@ -1,31 +1,30 @@
 <script lang="ts" setup>
 
 import { ref } from 'vue';
-
+const { id } = useRoute().params
 const newBookmark = ref("")
 const newPage = ref("")
 const message = ref("")
 
 const { pending, data: bookmarks } = useAsyncData(async () =>
-  $fetch("/api/bookmarks?userId=" + localStorage.getItem('userId')))
+  $fetch("/api/pagelinks?pageId=" + id))
 
 const { data: pages } = useAsyncData(async () =>
   $fetch("/api/pages?userId=" + localStorage.getItem('userId')))
 
-const edit1 = async () => {
-  localStorage.setItem('test', page.title)
-}
+const { data: thisPage } = useAsyncData(async () =>
+  $fetch("/api/pages?id=" + id))
 
 const addBookmark = async () => {
   message.value = "";
   if (bookmarks.value == null) return;
   if (newBookmark.value == "") return;
 
-  const bookmark = await $fetch('/api/bookmarks/create', {
+  const bookmark = await $fetch('/api/pagelinks/create', {
     method: 'post',
     body: {
       url: newBookmark.value,
-      userId: localStorage.getItem('userId')
+      pageId: id
     }
   });
 
@@ -48,10 +47,6 @@ const addPages = async () => {
 
   pages.value.push(page);
   newPage.value = "";
-}
-
-const editPage = async () => {
-
 }
 
 const deletePage = async (id: string) => {
@@ -89,7 +84,7 @@ const deleteBookmark = async (id: string) => {
   if (bookmarks.value == null) return;
   if (id == "") return;
 
-  const response = await $fetch('/api/bookmarks/delete', {
+  const response = await $fetch('/api/pagelinks/delete', {
     method: 'post',
     body: {
       id: id,
@@ -169,7 +164,7 @@ const storedUsername = localStorage.getItem('username');
 
       <br>
       <!-- display username of user -->
-      <h1 class="text-center text-2xl font-bold">{{ storedUsername }}</h1>
+      <h1 class="text-center text-2xl font-bold">{{ thisPage }}'s page</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
       <br>
 
@@ -207,46 +202,6 @@ const storedUsername = localStorage.getItem('username');
     <div class="flex justify-center items-center" v-else>No bookmarks found</div>
 
 <br><br><br>
-<button @click="toggleMenu" class="hamburger-button py-2 px-3 bg-gray-300 rounded hover:bg-gray-400">{{ isMenuOpen ? '✕' : ' my pages' }}</button>
-
-<ul class="trans" :class="{ 'active': isMenuOpen }">
-
-  <div>
-    <form class="bookmark-form" @submit.prevent>
-      <input v-model="newPage" type="text" name="newpage" id="newpage" placeholder="Add page here" required />
-      <button class="bg-gray-300 hover:bg-gray-400" @click="addPages">Add</button>
-    </form>
-    <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
-    <div class="flex justify-center items-center" v-if="pending">Loading...</div>
-
-    <div class="flex justify-center items-center" v-else-if="pages && pages.length > 0">
-      <ul class="trans" :class="{ 'active': isMenuOpen }">
-        <li class="bookmark-list--item" v-for="page in pages" :key="page.id">
-          <div class="flex">
-            <div class="flex-none w-24 h-14"></div>
-            <div class="flex-initial w-64">
-              <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-3 rounded-md text-sm text-white inline-block"
-                :href="/p/ + page.title" target="_blank" rel="noopener noreferrer">
-                
-                {{ page.title }}
-              </a>
-            </div>
-
-            <div class="flex-initial w-32">
-  
-                <NuxtLink :to="`/dashboard/page1/${page.id}`" class="bg-gray-400 hover:bg-gray-500 rounded px-3 py-4 text-xs inline-block">Edit</NuxtLink> 
-                
-            </div>
-          </div>
-
-        </li>
-      </ul>
-
-    </div>
-</div>
-</ul>
-
-
   </main>
 </template>
 
@@ -263,8 +218,7 @@ export default {
 
   methods: {
     toggleMenu() {
-      this.isMenuOpen2 = false;
-      this.isMenuOpen = !this.isMenuOpen;
+        this.isMenuOpen = !this.isMenuOpen;
       },
     async searchuser() {
       const usr = await $fetch('/api/user/search', {

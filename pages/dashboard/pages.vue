@@ -21,7 +21,7 @@ const addBookmark = async () => {
     method: 'post',
     body: {
       url: newBookmark.value,
-      userId: localStorage.getItem('userId')
+      pageId: id
     }
   });
 
