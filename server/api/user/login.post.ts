@@ -19,7 +19,11 @@ export default defineEventHandler( async (event) => {
       );
   
       // If a row is found, the login is successful
+          // @ts-ignore
+
       if (rows.length > 0) {
+            // @ts-ignore
+
         return rows[0];
       }
     } catch (error) {

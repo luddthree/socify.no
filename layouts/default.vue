@@ -26,7 +26,7 @@
                 <ol class="flex gap-4 right-6 absolute">
                     <li><NuxtLink to="/">Home</NuxtLink></li>
                     <li v-if="checkIsLoggedInLocalStorage()"><NuxtLink to="/dashboard">Dashboard</NuxtLink></li>
-                    <li v-if="checkIsLoggedInLocalStorage()"><NuxtLink to="/dashboard/pages">page edit</NuxtLink></li>
+                    <!-- <li v-if="checkIsLoggedInLocalStorage()"><NuxtLink to="/dashboard/pages">page edit</NuxtLink></li> -->
                     <li v-else><NuxtLink to="/login">login</NuxtLink></li>
                     <li v-if="checkIsLoggedInLocalStorage()" @click="logout()"><button class="text-s hover:text-red-700 cursor-pointer rounded">Log out</button></li>
                     <li v-else><NuxtLink to="/signup" class="btn">signup</NuxtLink></li>
@@ -74,9 +74,9 @@
   </script>
   
   <style scoped>
-  /* .router-link-exact-active {
+  .router-link-exact-active {
       color: navy;
-  } */
+  }
   .hamburger-button {
   cursor: pointer;
 }

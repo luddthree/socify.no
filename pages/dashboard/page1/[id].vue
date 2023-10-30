@@ -1,25 +1,28 @@
 <script lang="ts" setup>
 
-import { ref } from 'vue';
+import { ref } from 'vue';// @ts-ignore
 const { id } = useRoute().params
 const newBookmark = ref("")
 const newPage = ref("")
 const message = ref("")
+// @ts-ignore
 
-const { pending, data: bookmarks } = useAsyncData(async () =>
+const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
   $fetch("/api/pagelinks?pageId=" + id))
+// @ts-ignore
 
-const { data: pages } = useAsyncData(async () =>
+const { data: pages } = useAsyncData(async () =>// @ts-ignore
   $fetch("/api/pages?userId=" + localStorage.getItem('userId')))
+// @ts-ignore
 
-const { data: thisPage } = useAsyncData(async () =>
+const { data: thisPage } = useAsyncData(async () =>// @ts-ignore
   $fetch("/api/pages?id=" + id))
 
 const addBookmark = async () => {
   message.value = "";
   if (bookmarks.value == null) return;
   if (newBookmark.value == "") return;
-
+// @ts-ignore
   const bookmark = await $fetch('/api/pagelinks/create', {
     method: 'post',
     body: {
@@ -36,7 +39,7 @@ const addPages = async () => {
   message.value = "";
   if (pages.value == null) return;
   if (newPage.value == "") return;
-
+// @ts-ignore
   const page = await $fetch('/api/pages/create', {
     method: 'post',
     body: {
@@ -61,6 +64,7 @@ const deletePage = async (id: string) => {
 
   try {
     // Call the deletePage function with the validated page ID
+    // @ts-ignore
     const response = await $fetch('/api/pages/delete', {
       method: 'post',
       body: {
@@ -83,7 +87,7 @@ const deletePage = async (id: string) => {
 const deleteBookmark = async (id: string) => {
   if (bookmarks.value == null) return;
   if (id == "") return;
-
+// @ts-ignore
   const response = await $fetch('/api/pagelinks/delete', {
     method: 'post',
     body: {
@@ -154,7 +158,7 @@ const storedUsername = localStorage.getItem('username');
       <div>
         <div class="container mt-10">
           <div class="flex justify-center items-center">
-            <img class="w-32 h-32 rounded-full overflow-hidden" :src="image || 'pfp.jpg'" alt="">
+            <img class="w-32 h-32 rounded-full overflow-hidden" :src="image || '/pfp.jpg'" alt="">
           </div><br>
           <div class="">
             <input @change="handleImage" type="file" accept="image/*" class="absolute">
@@ -164,7 +168,7 @@ const storedUsername = localStorage.getItem('username');
 
       <br>
       <!-- display username of user -->
-      <h1 class="text-center text-2xl font-bold">{{ thisPage }}'s page</h1>
+      <h1 class="text-center text-2xl font-bold">{{ id }}'s page</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
       <br>
 
@@ -220,7 +224,7 @@ export default {
     toggleMenu() {
         this.isMenuOpen = !this.isMenuOpen;
       },
-    async searchuser() {
+    async searchuser() {// @ts-ignore
       const usr = await $fetch('/api/user/search', {
         method: 'post',
         body: {
@@ -236,8 +240,8 @@ export default {
     createBase64Image(fileObject) {
       const reader = new FileReader();
 
-      reader.onload = (e) => {
-        this.image = e.target.result;
+      reader.onload = (e) => {// @ts-ignore
+        this.image = e.target.result;// @ts-ignore
         console.log(image);
       };
       reader.readAsDataURL(fileObject);

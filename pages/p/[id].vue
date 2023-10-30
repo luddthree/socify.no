@@ -1,7 +1,7 @@
-<script lang="ts" setup>
-const message = ref("")
-const { id } = useRoute().params
-const response = await $fetch('/api/user/search', {
+<script lang="ts" setup>// @ts-ignore
+const message = ref("")// @ts-ignore
+const { id } = useRoute().params// @ts-ignore
+const response = await $fetch('/api/user/search_pages', {
     method: 'post',
     body: {
         name: id,
@@ -9,14 +9,14 @@ const response = await $fetch('/api/user/search', {
 })
 
 
-// if (!response) {
-//         throw createError({ statusCode: 404, message: 'Username not found', fatal: true})
-//     }
+if (!response) {// @ts-ignore
+        throw createError({ statusCode: 404, message: 'Username not found', fatal: true})
+    }
 
 
-
-const { pending, data: bookmarks } = useAsyncData(async () =>
-  $fetch("/api/bookmarks?userId=" + response.id))
+// @ts-ignore
+const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
+  $fetch("/api/pagelinks?pageId=" + response.id))
 
 
 
@@ -61,7 +61,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 
 <!-- put a picture here -->
 <div class="flex justify-center items-center">
-<img class="w-32 h-32 rounded-full overflow-hidden " src="pfp.jpg" alt="">
+<img class="w-32 h-32 rounded-full overflow-hidden " src="/pfp.jpg" alt="">
 </div>
 
 <br>
@@ -78,7 +78,6 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
   <li class="bookmark-list--item" v-for="bookmark in bookmarks" :key="bookmark.id">
     <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm text-white inline-block" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
       <img :src="bookmark.icon_url" />
-      
       {{ bookmark.url }}
       
     </a>

@@ -13,7 +13,7 @@
           <h1 class="text-center text-2xl font-bold">Search users</h1>
 
         </div><br>
-        <form @submit.prevent="searchuser">
+        <form @submit.prevent="search">
         <div class="flex justify-center">
           <div>
               <div class="form-group">
@@ -56,20 +56,50 @@ export default {
           body: {
               name: this.inputUsername,
           }
-      })
+      });
 
       if (response) {
-          //naviagte to the username searched
-          await navigateTo('/' + response.name)
+          // Navigate to the username searched
+          await navigateTo('/' + response.name);
+          return true; // Indicate success
       } else {
-        await navigateTo('/' + this.inputUsername)
+        return false; // Indicate failure
       }
-      
+    },
+    async searchpage() {
+      const response = await $fetch('/api/user/search_pages', {
+          method: 'post',
+          body: {
+              name: this.inputUsername,
+          }
+      });
+
+      if (response) {
+          // Navigate to the username searched
+          await navigateTo('/p/' + this.inputUsername);
+
+          return true; // Indicate success
+      } else {
+        await navigateTo('/p/' + this.inputUsername)
+        return false; // Indicate failure
+
+      }
+    },
+
+    async search() {
+      // Call searchuser and check its result
+      const searchUserSuccess = await this.searchuser();
+
+      // Only call searchpage if searchuser failed (returned false)
+      if (!searchUserSuccess) {
+        await this.searchpage();
+      }
     },
   },
 };
-
 </script>
+
+
 
 <script lang="ts" setup>
 // Check if the localStorage item "isLoggedIn" is true or false

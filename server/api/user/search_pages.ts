@@ -15,11 +15,13 @@ export default defineEventHandler( async (event) => {
       // Query the database to check if the username and password match
       const [rows] = await connection.execute(
         'SELECT * FROM pages WHERE title = ?',
-        [body.title]
+        [body.name]
       );
   
       // If a row is found, the login is successful
+          // @ts-ignore
       if (rows.length > 0) {
+            // @ts-ignore
         return rows[0];
       }
     } catch (error) {

@@ -28,7 +28,7 @@ const addBookmark = async () => {
       userId: localStorage.getItem('userId')
     }
   });
-
+// @ts-ignore
   bookmarks.value.push(bookmark);
   newBookmark.value = "";
 }
@@ -45,9 +45,11 @@ const addPages = async () => {
       user_id: localStorage.getItem('userId')
     }
   });
-
+// @ts-ignore
   pages.value.push(page);
   newPage.value = "";
+
+  // await navigateTo('/dashboard/page1/' + page.id)
 }
 
 const editPage = async () => {
@@ -58,7 +60,8 @@ const deletePage = async (id: string) => {
   if (pages.value == null) return;
   if (id == "") return;
 
-  // Ensure that id is a valid number
+  // Ensure that id is a valid number 
+  // @ts-ignore
   if (isNaN(id)) {
     console.error('Invalid page ID provided.');
     return;
@@ -77,6 +80,7 @@ const deletePage = async (id: string) => {
     // message.value = response.message;
 
     // Remove the deleted page from the pages list
+    // @ts-ignore
     pages.value = pages.value.filter((page) => page.id !== id);
   } catch (error) {
     console.error('Error deleting page:', error);
@@ -98,7 +102,7 @@ const deleteBookmark = async (id: string) => {
 
   // display response.message somehow
   // message.value = response.message;
-
+// @ts-ignore
   bookmarks.value = bookmarks.value.filter(bookmark => bookmark.id !== id);
 }
 
@@ -175,6 +179,8 @@ const storedUsername = localStorage.getItem('username');
 
       <input v-model="newBookmark" type="url" name="url" id="url" placeholder="Add your links here" required />
       <button class="bg-gray-300 hover:bg-gray-400" @click="addBookmark">Add</button>
+      <!-- <NuxtLink :to="`/dashboard/page1/${page.id}`"  @click="addBookmark" class="bg-gray-300 hover:bg-gray-400">Add</NuxtLink> -->
+
     </form>
     <!-- <div>{{ newBookmark }}</div> -->
     <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
@@ -206,7 +212,7 @@ const storedUsername = localStorage.getItem('username');
 
     <div class="flex justify-center items-center" v-else>No bookmarks found</div>
 
-<br><br><br>
+<br><br><hr><br>
 <button @click="toggleMenu" class="hamburger-button py-2 px-3 bg-gray-300 rounded hover:bg-gray-400">{{ isMenuOpen ? '✕' : ' my pages' }}</button>
 
 <ul class="trans" :class="{ 'active': isMenuOpen }">
@@ -234,7 +240,10 @@ const storedUsername = localStorage.getItem('username');
 
             <div class="flex-initial w-32">
   
-                <NuxtLink :to="`/dashboard/page1/${page.id}`" class="bg-gray-400 hover:bg-gray-500 rounded px-3 py-4 text-xs inline-block">Edit</NuxtLink> 
+                <NuxtLink :to="`/dashboard/page1/${page.id}`" class="bg-gray-400 hover:bg-gray-500 absolute rounded px-3 py-4 text-xs inline-block">Edit links</NuxtLink>
+                
+                <button class="bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs ml-20 absolute"
+                @click="deletePage(page.id)">Delete page</button>
                 
             </div>
           </div>
@@ -263,6 +272,7 @@ export default {
 
   methods: {
     toggleMenu() {
+      // @ts-ignore
       this.isMenuOpen2 = false;
       this.isMenuOpen = !this.isMenuOpen;
       },
@@ -279,11 +289,13 @@ export default {
       this.createBase64Image(file);
       console.log(file);
     },
+    // @ts-ignore
     createBase64Image(fileObject) {
       const reader = new FileReader();
 
       reader.onload = (e) => {
-        this.image = e.target.result;
+        // @ts-ignore
+        this.image = e.target.result;// @ts-ignore
         console.log(image);
       };
       reader.readAsDataURL(fileObject);
