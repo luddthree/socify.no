@@ -100,7 +100,6 @@ export async function deletePage(options: DeleteOptions) {
       return { message: `page with ID ${params.id} not found.` };
     }
 
-    await connection.execute('DELETE FROM pagelinks WHERE id = ?', [params.id]);
     await connection.execute('DELETE FROM pages WHERE id = ?', [params.id]);
 
 
