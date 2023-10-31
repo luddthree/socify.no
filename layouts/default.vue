@@ -2,10 +2,10 @@
     <div>
       <br>
       <!-- Header for mobile devices -->
-      <header class="shadow-md rounded-3xl bg-white sm:hidden ml-6 mr-6">
+      <header class="shadow-md fixed w-10/12 rounded-3xl bg-white sm:hidden ml-6 mr-6">
             <nav class="conatiner mx-auto p-4 flex justify-between">
                 <NuxtLink to="/" class="font-bold text-lg ml-2">Faen.world</NuxtLink>
-                <button @click="toggleMenu" class="hamburger-button trans absolute top-9 right-14" style="font-size: 25px;">{{ isMenuOpen ? '✕' : '☰' }}</button>
+                <button @click="toggleMenu" class="hamburger-button trans absolute top-3 right-10" style="font-size: 25px;">{{ isMenuOpen ? '✕' : '☰' }}</button>
 
                     <ul class="trans mt-11" :class="{ 'active': isMenuOpen }">
                 
