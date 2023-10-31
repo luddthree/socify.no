@@ -47,7 +47,7 @@
     
     <div class="flex-auto w-2/5 mt-10 justify-center items-center">
     
-        <img src="example_phone.png" alt="example" class="" style="height: 100%;">
+        <img src="/example_phone.png" alt="example" class="" style="height: 100%;">
       </div>      
       <div class="flex-none w-6">
     </div>
