@@ -15,7 +15,7 @@
 
       </div>
       <div class="flex-auto w-4/5 mt-10">
-        <img src="example_phone.png" alt="example" class="" style="height: 88%;">
+        <img src="/example_phone.png" alt="example" class="" style="height: 88%;">
       </div>
       <div class="flex-auto w-2/5 font-bold mt-10">
         <h1 style="font-size: 7.5rem; line-height: 0.93; letter-spacing: -4px;">
