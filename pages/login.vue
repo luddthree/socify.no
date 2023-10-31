@@ -28,14 +28,14 @@
     </div>
   </template> -->
   <template>
-    <br><br>
+    <br><br><br><br>
 <div class="flex">
   <div class="m-2 mx-auto">
-    <div class="bg-gray-200 rounded-2xl px-8 py-2">
+    <div class="bg-gray-200 rounded-md px-16 py-3">
         <br>
         <div>
           <div class="flex justify-center text-center">
-            <h1 class="text-center text-2xl font-bold">log in</h1>
+            <h1 class="text-center text-2xl font-bold">Log in</h1>
 
           </div><br>
           <form @submit.prevent="handleLogin">
@@ -59,7 +59,7 @@
           </div>
           <br>
           <div class="flex justify-center">
-                <button type="submit" class="btn btn-primary bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded">Login</button>
+                <button type="submit" class="btn btn-primary bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded text-xl">Login</button>
 
           </div>
             <br><br>
@@ -68,12 +68,13 @@
         </div>
         <br>
         <div class="text-gray-600 text-sm flex justify-center">
-          <p>Already a member? <b><a href="/login" class="text-gray-700 hover:text-gray-900 text-sm"> log in here!</a></b></p>            </div>
+          <p>Not a member? <b><a href="/signup" class="text-gray-700 hover:text-gray-900 text-sm"> Sign up here!</a></b></p>            </div>
       <br><br>
     </div>
   </div>
-
-
+  
+  
+  <br><br><br><br><br><br><br><br><br><br><br>
 </template>
   
   <script>

@@ -5,6 +5,9 @@
         <p class="mt-7">{{ error.message }}</p>
         <button class="btn my-7" @click="fixerror()">Go Home...</button>
     </div>
+
+
+    <!-- <img src="/error2.png" alt="error" class="animate-spin w-36" /> -->
 </template>
 
 <script setup>

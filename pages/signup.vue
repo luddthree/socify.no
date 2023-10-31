@@ -31,10 +31,10 @@ const signup = async () => {
 </script>
 
 <template>
-      <br><br>
+      <br><br><br><br>
   <div class="flex">
     <div class="m-2 mx-auto">
-      <div class="bg-gray-200 rounded-2xl px-8 py-2">
+      <div class="bg-gray-200 rounded-md px-16 py-3">
           <br>
           <div>
             <div class="flex justify-center text-center">
@@ -64,7 +64,7 @@ const signup = async () => {
             </div>
             <br>
             <div class="flex justify-center">
-                  <button class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded" @click="signup">Sign up</button>
+                  <button class="bg-gray-800 hover:bg-gray-900 text-xl text-white font-bold py-2 px-4 rounded hover:animate-none animate-pulse" @click="signup">Sign up</button>
 
 
             </div>
@@ -77,4 +77,5 @@ const signup = async () => {
         <br><br>
       </div>
     </div>
+    <br><br><br><br><br><br><br><br><br><br>
 </template>

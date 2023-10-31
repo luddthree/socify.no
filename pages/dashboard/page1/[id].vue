@@ -158,7 +158,8 @@ const storedUsername = localStorage.getItem('username');
       <div>
         <div class="container mt-10">
           <div class="flex justify-center items-center">
-            <img class="w-32 h-32 rounded-full overflow-hidden" :src="image || '/pfp.jpg'" alt="">
+            
+            <img class="w-32 h-32 rounded-full overflow-hidden mt-12" :src="image || '/pfp.jpg'" alt="">
           </div><br>
           <div class="">
             <input @change="handleImage" type="file" accept="image/*" class="absolute">
@@ -168,7 +169,7 @@ const storedUsername = localStorage.getItem('username');
 
       <br>
       <!-- display username of user -->
-      <h1 class="text-center text-2xl font-bold">{{ id }}'s page</h1>
+      <h1 class="text-center text-2xl font-bold">{{ id }}</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
       <br>
 

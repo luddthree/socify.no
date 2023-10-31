@@ -61,7 +61,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
 
 <!-- put a picture here -->
 <div class="flex justify-center items-center">
-<img class="w-32 h-32 rounded-full overflow-hidden " src="/pfp.jpg" alt="">
+<img class="w-32 h-32 rounded-full overflow-hidden mt-32" src="/pfp.jpg" alt="">
 </div>
 
 <br>
@@ -87,6 +87,10 @@ const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
     </div>
 
     <div class="flex justify-center items-center" v-else>No bookmarks found</div>
+    <div class="mb-56">
+      <br><br><br><br><br>
+      <br><br><br><br><br>
+    </div>
   </main>
 </template>
 

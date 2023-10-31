@@ -163,7 +163,8 @@ const storedUsername = localStorage.getItem('username');
       <div>
         <div class="container mt-10">
           <div class="flex justify-center items-center">
-            <img class="w-32 h-32 rounded-full overflow-hidden" :src="image || 'pfp.jpg'" alt="">
+
+            <img class="w-32 h-32 rounded-full overflow-hidden mt-12" :src="image || 'pfp.jpg'" alt="">
           </div><br>
           <div class="">
             <input @change="handleImage" type="file" accept="image/*" class="absolute">
@@ -213,7 +214,7 @@ const storedUsername = localStorage.getItem('username');
     <div class="flex justify-center items-center" v-else>No bookmarks found</div>
 
 <br><br><hr><br>
-<button @click="toggleMenu" class="hamburger-button py-2 px-3 bg-gray-300 rounded hover:bg-gray-400">{{ isMenuOpen ? '✕' : ' my pages' }}</button>
+<button @click="toggleMenu" class="hamburger-button py-2 px-3 bg-gray-300 rounded hover:bg-gray-400 mb-14">{{ isMenuOpen ? 'close' : ' my pages' }}</button>
 
 <ul class="trans" :class="{ 'active': isMenuOpen }">
 
@@ -238,14 +239,20 @@ const storedUsername = localStorage.getItem('username');
               </a>
             </div>
 
+            
             <div class="flex-initial w-32">
   
-                <NuxtLink :to="`/dashboard/page1/${page.id}`" class="bg-gray-400 hover:bg-gray-500 absolute rounded px-3 py-4 text-xs inline-block">Edit links</NuxtLink>
+  <NuxtLink :to="`/dashboard/page1/${page.id}`" class="bg-gray-400 hover:bg-gray-500 absolute rounded px-3 py-4 text-xs inline-block">Edit links</NuxtLink>
+  
+  <button class="hidden sm:flex bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs ml-20 absolute"
+  @click="deletePage(page.id)">Delete page</button>
+  
+</div>
+
+                <button class="sm:hidden bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs right-20 absolute"
+                @click="deletePage(page.id)">Delete</button>
                 
-                <button class="bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs ml-20 absolute"
-                @click="deletePage(page.id)">Delete page</button>
-                
-            </div>
+            
           </div>
 
         </li>
