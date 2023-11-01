@@ -12,7 +12,7 @@
                     <!-- <li @click="toggleMenu()" class="mb-4 mt-8"><NuxtLink to="/">Home</NuxtLink></li> -->
                     <li @click="toggleMenu()" class="rounded-2xl bg-gray-800 hover:gray-900 py-3 px-3 text-white mt-6" v-if="checkIsLoggedInLocalStorage()"><NuxtLink to="/dashboard">Dashboard</NuxtLink></li>
                     <li @click="toggleMenu()" class="mb-10 mr-14 rounded-xl bg-gray-200 hover:bg-gray-300 text-black py-3 px-3 mr-2 text-center font-bold" v-else><NuxtLink to="/login">Log in</NuxtLink></li>
-                    <li @click="logout()" class="absolute top-28 mt-2 left-20" v-if="checkIsLoggedInLocalStorage()"><p class="text-s hover:bg-red-700 cursor-pointer rounded p-0.5 px-1">Log out</p></li>
+                    <li @click="logout()" class="absolute top-20 mt-4 left-20" v-if="checkIsLoggedInLocalStorage()"><button class="text-s hover:bg-red-700 cursor-pointer rounded ">Logout</button></li>
                     <li @click="toggleMenu()" class="mb-3" v-else><NuxtLink to="/signup" class="rounded-full bg-gray-800 hover:bg-gray-900 text-black py-4 px-4 font-bold mr-2 text-white">Sign up for free!</NuxtLink></li>
                 
                     </ul>

@@ -164,21 +164,27 @@ const storedUsername = localStorage.getItem('username');
         <div class="container mt-10">
           <div class="flex justify-center items-center">
 
-            <img class="w-32 h-32 rounded-full overflow-hidden mt-12" :src="image || 'pfp.jpg'" alt="">
-          </div><br>
+            <img class="w-32 h-32 rounded-full overflow-hidden mt-12"  :src="image || 'pfp.jpg'" alt="">
+          </div>
           <div class="">
-            <input @change="handleImage" type="file" accept="image/*" class="absolute">
+            <button @click="togglepfp" class="" style="font-size: 20px;">{{ inputmenu ? '⊗' : ' ✎' }}</button>
+            
+            <ul class="trans" :class="{ 'active': inputmenu }">
+            <input @change="handleImage" type="file" accept="image/*" class="">
+            </ul>
+
+            
           </div>
         </div>
       </div>
 
-      <br>
+
       <!-- display username of user -->
       <h1 class="text-center text-2xl font-bold">{{ storedUsername }}</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
       <br>
 
-      <input v-model="newBookmark" type="url" name="url" id="url" placeholder="Add your links here" required />
+      <input v-model="newBookmark" type="url" name="url" id="url" placeholder="Add your links here" />
       <button class="bg-gray-300 hover:bg-gray-400" @click="addBookmark">Add</button>
       <!-- <NuxtLink :to="`/dashboard/page1/${page.id}`"  @click="addBookmark" class="bg-gray-300 hover:bg-gray-400">Add</NuxtLink> -->
 
@@ -199,8 +205,8 @@ const storedUsername = localStorage.getItem('username');
                 {{ bookmark.url }}
               </a>
             </div>
-            <div class="flex-initial w-32">
-              <button class="bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs inline-block"
+            <div class=" absolute">
+              <button class="bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs absolute left-10 inline-block"
                 @click="deleteBookmark(bookmark.id)">Delete</button>
             </div>
           </div>
@@ -240,16 +246,16 @@ const storedUsername = localStorage.getItem('username');
             </div>
 
             
-            <div class="flex-initial w-32">
+            <div class="flex-initial w-32 absolute">
   
   <NuxtLink :to="`/dashboard/page1/${page.id}`" class="bg-gray-400 hover:bg-gray-500 absolute rounded px-3 py-4 text-xs inline-block">Edit links</NuxtLink>
   
-  <button class="hidden sm:flex bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs ml-20 absolute"
-  @click="deletePage(page.id)">Delete page</button>
+  <button class="hidden sm:flex bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs ml-20 absolute left-64"
+  @click="deletePage(page.id)">Delete</button>
   
 </div>
 
-                <button class="sm:hidden bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs right-20 absolute"
+                <button class="sm:hidden bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs right-8 absolute"
                 @click="deletePage(page.id)">Delete</button>
                 
             
@@ -274,6 +280,7 @@ export default {
       image: '',
       inputUsername: '',
       isMenuOpen: false,
+      inputmenu: false,
     }
   },
 
@@ -282,6 +289,10 @@ export default {
       // @ts-ignore
       this.isMenuOpen2 = false;
       this.isMenuOpen = !this.isMenuOpen;
+      },
+      togglepfp() {
+      // @ts-ignore
+      this.inputmenu = !this.inputmenu;
       },
     async searchuser() {
       const usr = await $fetch('/api/user/search', {
