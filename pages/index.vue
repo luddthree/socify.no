@@ -39,7 +39,7 @@
 
       <div class="flex-auto w-2/5 font-bold">
         <br><br>
-        <h1 style="font-size: 3rem; line-height: 0.93; letter-spacing: -2px;">
+        <h1 style="font-size: 3.4rem; line-height: 0.93; letter-spacing: -2px;">
           All of your socials, in just one link.
         </h1>
       </div>
