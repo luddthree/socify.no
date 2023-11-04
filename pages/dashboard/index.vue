@@ -46,6 +46,13 @@ const addPages = async () => {
     }
   });
 // @ts-ignore
+
+if (page){
+  localStorage.setItem('test', page.title)
+
+}
+
+
   pages.value.push(page);
   newPage.value = "";
 

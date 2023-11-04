@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 
+import { Title } from '#build/components';
 import { ref } from 'vue';// @ts-ignore
 const { id } = useRoute().params
 const newBookmark = ref("")
@@ -12,7 +13,16 @@ const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
 // @ts-ignore
 
 const { data: pages } = useAsyncData(async () =>// @ts-ignore
-  $fetch("/api/pages?userId=" + localStorage.getItem('userId')))
+  $fetch("/api/pages?userId=" + localStorage.getItem('userId')
+))
+
+ 
+const { data: title } = useAsyncData(async () =>
+  $fetch("/api/pages/gettitle?title=" + i +
+  localStorage.setItem('test', id)
+
+
+))
 // @ts-ignore
 
 const { data: thisPage } = useAsyncData(async () =>// @ts-ignore
@@ -33,6 +43,8 @@ const addBookmark = async () => {
 
   bookmarks.value.push(bookmark);
   newBookmark.value = "";
+
+  
 }
 
 const addPages = async () => {
@@ -144,7 +156,7 @@ if (isLoggedInValue === true) {
 }
 
 const storedUsername = localStorage.getItem('username');
-
+const storedpage = localStorage.getItem('test');
 </script>
 
 
@@ -169,7 +181,7 @@ const storedUsername = localStorage.getItem('username');
 
       <br>
       <!-- display username of user -->
-      <h1 class="text-center text-2xl font-bold">{{ id }}</h1>
+      <h1 class="text-center text-2xl font-bold">{{ Id }}</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
       <br>
 

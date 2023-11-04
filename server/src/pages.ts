@@ -7,13 +7,12 @@ interface Page {
   id?: number;
   user_id: number;
   title: string;
-  slug: string;
 }
 
 interface AddOptions {
   user_id: number
   title: string
-  slug: string
+  
 }
 
 const pool: Pool = createPool({
@@ -47,25 +46,35 @@ export async function getbyid(id:number) {
     connection.release();
   }
 }
+export async function gettitle(title:string) {
+  const connection: PoolConnection = await pool.getConnection();
+  try {
+    // @ts-ignore
+
+    const  [rows] : Page[] = await connection.query('SELECT * FROM pages where title=' + title);
+    return rows;
+  } finally {
+    connection.release();
+  }
+}
+
+
+
+
 
 export async function addpage(options: AddOptions) {
   const params = options;
 
-  if (!params.slug || params.slug.trim() === '') {
-    params.slug = generateDefaultSlug(); 
-  }
-
   const page: Page = {
     user_id: params.user_id,
     title: params.title,
-    slug: params.slug,
   };
 
   const connection: PoolConnection = await pool.getConnection();
   try {
     await connection.query(
-      'INSERT INTO pages (user_id, title, slug) VALUES (?, ?, ?)',
-      [page.user_id, page.title, page.slug]
+      'INSERT INTO pages (user_id, title) VALUES (?, ?)',
+      [page.user_id, page.title]
     );
 
     return page;
@@ -74,9 +83,6 @@ export async function addpage(options: AddOptions) {
   }
 }
 
-function generateDefaultSlug() {
-  return 'test'; 
-}
 
  
 
