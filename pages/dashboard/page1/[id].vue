@@ -18,7 +18,7 @@ const { data: pages } = useAsyncData(async () =>// @ts-ignore
 
  
 const { data: title } = useAsyncData(async () =>
-  $fetch("/api/pages/gettitle?title=" + i +
+  $fetch("/api/pages/gettitle?title=" + id +
   localStorage.setItem('test', id)
 
 
@@ -181,7 +181,7 @@ const storedpage = localStorage.getItem('test');
 
       <br>
       <!-- display username of user -->
-      <h1 class="text-center text-2xl font-bold">{{ Id }}</h1>
+      <h1 class="text-center text-2xl font-bold">{{ id }}</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
       <br>
 
@@ -216,7 +216,7 @@ const storedpage = localStorage.getItem('test');
     </div>
   
 
-    <div class="flex justify-center items-center" v-else>No bookmarks found</div>
+    <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No bookmarks found</div>
 
 <br><br><br>
   </main>

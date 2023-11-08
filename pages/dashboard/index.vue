@@ -189,7 +189,9 @@ const storedUsername = localStorage.getItem('username');
       <!-- display username of user -->
       <h1 class="text-center text-2xl font-bold">{{ storedUsername }}</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
-      <br>
+
+
+
 
       <input v-model="newBookmark" type="url" name="url" id="url" placeholder="Add your links here" />
       <button class="bg-gray-300 hover:bg-gray-400" @click="addBookmark">Add</button>
@@ -224,9 +226,17 @@ const storedUsername = localStorage.getItem('username');
     </div>
   
 
-    <div class="flex justify-center items-center" v-else>No bookmarks found</div>
+    <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No bookmarks found</div>
+    <br>
+    <hr><br>
+<div class="flex justify-center items-center">
+  <p>View your page here!</p>
+</div>
+  <div class="flex justify-center items-center mt-3">
+    <a :href="`/${storedUsername}`" class=" bg-gray-200 hover:bg-gray-300 rounded-xl py-2 px-2.5">faen.world/{{ storedUsername }}</a>
+  </div>
 
-<br><br><hr><br>
+<br><hr><br>
 <button @click="toggleMenu" class="hamburger-button py-2 px-3 bg-gray-300 rounded hover:bg-gray-400 mb-14">{{ isMenuOpen ? 'close' : ' my pages' }}</button>
 
 <ul class="trans" :class="{ 'active': isMenuOpen }">
