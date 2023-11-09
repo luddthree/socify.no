@@ -186,6 +186,18 @@ const storedUsername = localStorage.getItem('username');
       </div>
 
 
+
+
+      <div class="absolute mt-40 right-72 bg-gray-200 p-4 rounded-xl hidden sm:grid">
+<div class="flex justify-center items-center">
+  <p>View your page here!</p>
+</div>
+  <div class="flex justify-center items-center mt-3">
+    <a :href="`/${storedUsername}`" class=" bg-gray-300 hover:bg-gray-400 rounded-xl py-2 px-2.5">faen.world/<b>{{ storedUsername }}</b></a>
+  </div>
+</div>
+
+
       <!-- display username of user -->
       <h1 class="text-center text-2xl font-bold">{{ storedUsername }}</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
@@ -227,14 +239,15 @@ const storedUsername = localStorage.getItem('username');
   
 
     <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No bookmarks found</div>
-    <br>
     <hr><br>
+    <div class=" bg-gray-200 p-4 rounded-xl mr-8 ml-8 sm:hidden">
 <div class="flex justify-center items-center">
   <p>View your page here!</p>
 </div>
   <div class="flex justify-center items-center mt-3">
-    <a :href="`/${storedUsername}`" class=" bg-gray-200 hover:bg-gray-300 rounded-xl py-2 px-2.5">faen.world/{{ storedUsername }}</a>
+    <a :href="`/${storedUsername}`" class=" bg-gray-300 hover:bg-gray-400 rounded-xl py-2 px-2.5">faen.world/<b>{{ storedUsername }}</b></a>
   </div>
+</div>
 
 <br><hr><br>
 <button @click="toggleMenu" class="hamburger-button py-2 px-3 bg-gray-300 rounded hover:bg-gray-400 mb-14">{{ isMenuOpen ? 'close' : ' my pages' }}</button>
