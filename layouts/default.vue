@@ -40,7 +40,7 @@
 
     </div>
     <div class="conatiner mx-auto">
-            <slot />
+            <NuxtPage/>
         </div>
 
 
