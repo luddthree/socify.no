@@ -63,39 +63,58 @@ const editPage = async () => {
 
 }
 
-const deletePage = async (id: string) => {
-  if (pages.value == null) return;
-  if (id == "") return;
+// const deletePage = async (id: string) => {
+//   if (pages.value == null) return;
+//   if (id == "") return;
 
-  // Ensure that id is a valid number 
-  // @ts-ignore
-  if (isNaN(id)) {
-    console.error('Invalid page ID provided.');
-    return;
-  }
+//   // Ensure that id is a valid number 
+//   // @ts-ignore
+//   if (isNaN(id)) {
+//     console.error('Invalid page ID provided.');
+//     return;
+//   }
 
-  try {
-    // Call the deletePage function with the validated page ID
-    const response = await $fetch('/api/pages/delete', {
-      method: 'post',
-      body: {
-        id: id,
-      },
-    });
+//   try {
+//     // Call the deletePage function with the validated page ID
+//     const response = await $fetch('/api/pages/delete', {
+//       method: 'post',
+//       body: {
+//         id: id,
+//       },
+//     });
 
-    // Display response.message somehow
-    // message.value = response.message;
+//     // Display response.message somehow
+//     // message.value = response.message;
 
-    // Remove the deleted page from the pages list
-    // @ts-ignore
-    pages.value = pages.value.filter((page) => page.id !== id);
-  } catch (error) {
-    console.error('Error deleting page:', error);
-    // Handle the error and show an error message to the user
-  }
-}
+//     // Remove the deleted page from the pages list
+//     // @ts-ignore
+//     pages.value = pages.value.filter((page) => page.id !== id);
+//   } catch (error) {
+//     console.error('Error deleting page:', error);
+//     // Handle the error and show an error message to the user
+//   }
+// }
 
 //function that deletes a bookmark
+const deletePage = async (id: number) => {
+  if (pages.value == null) return;
+  // if (id == "") return;
+
+  const response = await $fetch('/api/pages/delete', {
+    method: 'post',
+    body: {
+      id: id,
+    }
+  });
+
+  // display response.message somehow
+  message.value = response.message;
+// @ts-ignore
+  pages.value = pages.value.filter(page => page.id !== id);
+}
+
+
+
 const deleteBookmark = async (id: string) => {
   if (bookmarks.value == null) return;
   if (id == "") return;
@@ -204,7 +223,6 @@ const storedUsername = localStorage.getItem('username');
 
 
 
-
       <input v-model="newBookmark" type="url" name="url" id="url" placeholder="Add your links here" />
       <button class="bg-gray-300 hover:bg-gray-400" @click="addBookmark">Add</button>
       <!-- <NuxtLink :to="`/dashboard/page1/${page.id}`"  @click="addBookmark" class="bg-gray-300 hover:bg-gray-400">Add</NuxtLink> -->
@@ -247,16 +265,18 @@ const storedUsername = localStorage.getItem('username');
   <div class="flex justify-center items-center mt-3">
     <a :href="`/${storedUsername}`" class=" bg-gray-300 hover:bg-gray-400 rounded-xl py-2 px-2.5">faen.world/<b>{{ storedUsername }}</b></a>
   </div>
+
+  <br><hr>
 </div>
 
-<br><hr><br>
+<br>
 <button @click="toggleMenu" class="hamburger-button py-2 px-3 bg-gray-300 rounded hover:bg-gray-400 mb-14">{{ isMenuOpen ? 'close' : ' my pages' }}</button>
 
 <ul class="trans" :class="{ 'active': isMenuOpen }">
 
   <div>
     <form class="bookmark-form" @submit.prevent>
-      <input v-model="newPage" type="text" name="newpage" id="newpage" placeholder="Add page here" required />
+      <input v-model="newPage" type="text" name="newpage" id="newpage" placeholder="Add page here" />
       <button class="bg-gray-300 hover:bg-gray-400" @click="addPages">Add</button>
     </form>
     <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
