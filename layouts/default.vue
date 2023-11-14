@@ -4,7 +4,8 @@
       <!-- Header for mobile devices -->
       <header class="shadow-md fixed w-10/12 rounded-3xl bg-white sm:hidden ml-6 mr-6">
             <nav class="conatiner mx-auto p-4 flex justify-between">
-                <NuxtLink to="/" class="font-bold text-lg ml-2">Faen.world</NuxtLink>
+                <!-- <NuxtLink to="/" class="font-bold text-2xl left-4 ml-2 top-3"><img src="/logo.png" class="rounded-2xl" style="height:40px;"></NuxtLink> -->
+                <NuxtLink to="/" class="font-bold text-lg ">Faen.world</NuxtLink>
                 <button @click="toggleMenu" class="hamburger-button trans absolute top-3 right-10" style="font-size: 25px;">{{ isMenuOpen ? '✕' : '☰' }}</button>
 
                     <ul class="trans mt-11" :class="{ 'active': isMenuOpen }">
@@ -22,7 +23,9 @@
 
       <header class="shadow-md bg-white rounded-full hidden sm:flex ml-36 fixed w-10/12">
             <nav class="conatiner mx-auto p-4 flex justify-between mt-2 mb-3">
-                <NuxtLink to="/" class="font-bold text-2xl left-14 absolute">Faen.world</NuxtLink>
+
+              <!-- <NuxtLink to="/" class="font-bold text-2xl left-10 top-5 absolute"><img src="/logo.png" class="rounded-2xl" style="height:40px;"></NuxtLink> -->
+              <NuxtLink to="/" class="font-bold text-2xl left-10 absolute">Faen.world</NuxtLink>
                 <br>
                 <ol class="flex gap-4 right-8 absolute text-xl">
                     <!-- <li><NuxtLink to="/">Home</NuxtLink></li> -->
