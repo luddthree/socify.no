@@ -16,6 +16,14 @@
     "sass": "^1.69.3"
   },
   "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.6.4",
+    "@vueuse/nuxt": "^9.13.0",
+    "daisyui": "^2.51.5",
+    "n": "^9.2.0",
+    "nanoid": "^4.0.1",
+    "nvm": "^0.0.4",
+    "openai": "^3.2.1",
+    "vue3-markdown-it": "^1.0.10",
     "@databases/sqlite": "^4.0.2",
     "curl": "^0.1.4",
     "dotenv": "^16.3.1",
