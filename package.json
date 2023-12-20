@@ -12,24 +12,26 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "^6.8.0",
+    "@tailwindcss/typography": "^0.5.9",
     "nuxt": "^3.7.3",
     "sass": "^1.69.3"
   },
   "dependencies": {
+    "@databases/sqlite": "^4.0.2",
     "@nuxtjs/tailwindcss": "^6.6.4",
     "@vueuse/nuxt": "^9.13.0",
-    "daisyui": "^2.51.5",
-    "n": "^9.2.0",
-    "nanoid": "^4.0.1",
-    "nvm": "^0.0.4",
-    "openai": "^3.2.1",
-    "vue3-markdown-it": "^1.0.10",
-    "@databases/sqlite": "^4.0.2",
     "curl": "^0.1.4",
+    "daisyui": "^2.52.0",
     "dotenv": "^16.3.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.1",
+    "n": "^9.2.0",
+    "nanoid": "^4.0.1",
     "nuxt-storage": "^1.2.2",
+    "nvm": "^0.0.4",
+    "openai": "^3.2.1",
+    "typography": "^0.16.24",
+    "vue3-markdown-it": "^1.0.10",
     "zod": "^3.22.2"
   }
 }

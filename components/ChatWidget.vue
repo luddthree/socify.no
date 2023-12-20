@@ -3,13 +3,13 @@ import { Message, User } from "~~/types";
 
 const me = ref<User>({
   id: "user",
-  avatar: "/avatar.jpg",
+  avatar: "/pfp.jpg",
   name: "You",
 });
 const bot = ref<User>({
   id: "assistant",
   avatar: "/bot.jpg",
-  name: "Botman",
+  name: "SociBot",
 });
 
 const users = computed(() => [me.value, bot.value]);

@@ -79,11 +79,11 @@ watch(
       <!-- Messages -->
       <div class="messages p-4 overflow-y-scroll max-h-[80vh]" ref="messageBox">
         <div v-if="!messages.length" class="text-center w-[350px] m-auto">
-          <strong class="text-lg">Chat with Botman!</strong>
+          <strong class="text-lg">Chat with SociBot!</strong>
           <p>Our A.I. powered assistant</p>
           <strong class="block mt-10">Go ahead and ask us something:</strong>
           <ul class="list-inside list-disc text-left">
-            <li>What is social media post generator?</li>
+            <li>What is socify?</li>
             <li>How can I get human support?</li>
             <li>How was this tool built?</li>
           </ul>
@@ -101,7 +101,7 @@ watch(
         </ChatBubble>
       </div>
       <!-- Footer -->
-      <footer class="p-2">
+      <footer class="p-4">
         <input
           ref="input"
           class="input w-full px-2 block"
