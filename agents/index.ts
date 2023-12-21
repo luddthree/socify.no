@@ -1,7 +1,6 @@
 // register all agent files here
 export * from "./customerSupportAgent";
-export * from "./facebookAgent";
-export * from "./twitterAgent";
+
 
 // and register types here
 export type Agent = "facebook" | "twitter" | "customerSupport";
