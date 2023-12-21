@@ -3,12 +3,8 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 
 ## Setup
 
-Install packages:
+Install packages and run code:
 ```
-npm i
-```
-Run code:
-```
-npm run dev
+npm i && npm run dev
 ```
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
