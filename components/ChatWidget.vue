@@ -8,7 +8,7 @@ const me = ref<User>({
 });
 const bot = ref<User>({
   id: "assistant",
-  avatar: "/bot.jpg",
+  avatar: "/logo.png",
   name: "SociBot",
 });
 
