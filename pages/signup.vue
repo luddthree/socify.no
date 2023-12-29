@@ -38,24 +38,24 @@ const signup = async () => {
           <br>
           <div>
             <div class="flex justify-center text-center">
-              <h1 class="text-center text-2xl font-bold">Sign up</h1>
+              <h1 class="text-center text-2xl text-black font-bold">Sign up</h1>
             </div><br>
             <div class="flex justify-center">
               <div>
                 <input
-                class="rounded py-2 px-3"
+                class="rounded py-2 px-3 bg-white"
                     type="text"
                     v-model="username"
                     placeholder="Username"
                 /><br><br>
                 <input
-                class="rounded py-2 px-3"
+                class="rounded py-2 px-3 bg-white"
                     type="password"
                     v-model="password"
                     placeholder="Password"
                 /><br><br>
                 <input
-                class="rounded py-2 px-3"
+                class="rounded py-2 px-3 bg-white"
                     type="email"
                     v-model="email"
                     placeholder="email"

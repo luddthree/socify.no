@@ -35,7 +35,7 @@
         <br>
         <div>
           <div class="flex justify-center text-center">
-            <h1 class="text-center text-2xl font-bold">Log in</h1>
+            <h1 class="text-center text-2xl text-black font-bold">Log in</h1>
 
           </div><br>
           <form @submit.prevent="handleLogin">
@@ -43,14 +43,14 @@
             <div>
                 <div class="form-group">
               <input
-              class="form-control rounded py-2 px-3"
+              class="form-control rounded bg-white py-2 px-3"
                   type="text"
                   v-model="inputUsername"
                   placeholder="Username"
               /><br><br></div>
               <div class="form-group">
               <input
-              class="form-control rounded py-2 px-3"
+              class="form-control rounded bg-white py-2 px-3"
                   type="password"
                   v-model="inputPassword"
                   placeholder="Password"

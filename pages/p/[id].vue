@@ -65,7 +65,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
 </div>
 
 <br>
-    <h1 class="text-center text-2xl font-bold">{{ id }}</h1>
+    <h1 class="text-center text-2xl text-black font-bold">{{ id }}</h1>
     <p class="text-xs text-center text-gray-700">no biograpy</p>
 <br>
 

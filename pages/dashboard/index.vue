@@ -193,10 +193,10 @@ const storedUsername = localStorage.getItem('username');
             <img class="w-32 h-32 rounded-full overflow-hidden mt-12"  :src="image || 'pfp.jpg'" alt="">
           </div>
           <div class="">
-            <button @click="togglepfp" class="" style="font-size: 20px;">{{ inputmenu ? '⊗' : ' ✎' }}</button>
+            <button @click="togglepfp" class="text-gray-700" style="font-size: 20px;">{{ inputmenu ? '⊗' : ' ✎' }}</button>
             
-            <ul class="trans" :class="{ 'active': inputmenu }">
-            <input @change="handleImage" type="file" accept="image/*" class="">
+            <ul class="trans " :class="{ 'active': inputmenu }">
+            <input @change="handleImage" type="file" accept="image/*" class="text-gray-800">
             </ul>
 
             
@@ -208,23 +208,23 @@ const storedUsername = localStorage.getItem('username');
 
 
       <div class="absolute mt-40 right-72 bg-gray-200 p-4 rounded-xl hidden sm:grid">
-<div class="flex justify-center items-center">
+<div class="flex text-black justify-center items-center">
   <p>View your page here!</p>
 </div>
   <div class="flex justify-center items-center mt-3">
-    <a :href="`/${storedUsername}`" class=" bg-gray-300 hover:bg-gray-400 rounded-xl py-2 px-2.5">faen.world/<b>{{ storedUsername }}</b></a>
+    <a :href="`/${storedUsername}`" class=" bg-gray-300 text-black hover:bg-gray-400 rounded-xl py-2 px-2.5">socify.no/<b>{{ storedUsername }}</b></a>
   </div>
 </div>
 
 
       <!-- display username of user -->
-      <h1 class="text-center text-2xl font-bold">{{ storedUsername }}</h1>
+      <h1 class="text-center text-2xl text-black font-bold">{{ storedUsername }}</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
 
 
 
-      <input v-model="newBookmark" type="url" name="url" id="url" placeholder="Add your links here" />
-      <button class="bg-gray-300 hover:bg-gray-400" @click="addBookmark">Add</button>
+      <input v-model="newBookmark" type="url" name="url" id="url" class="bg-white" placeholder="Add your links here" />
+      <button class="bg-gray-300 text-black hover:bg-gray-400" @click="addBookmark">Add</button>
       <!-- <NuxtLink :to="`/dashboard/page1/${page.id}`"  @click="addBookmark" class="bg-gray-300 hover:bg-gray-400">Add</NuxtLink> -->
 
     </form>
@@ -238,14 +238,14 @@ const storedUsername = localStorage.getItem('username');
           <div class="flex">
             <div class="flex-none w-24 h-14"></div>
             <div class="flex-initial w-64">
-              <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm text-white inline-block"
+              <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm inline-block"
                 :href="bookmark.url" target="_blank" rel="noopener noreferrer">
                 <img :src="bookmark.icon_url" />
                 {{ bookmark.url }}
               </a>
             </div>
             <div class=" absolute">
-              <button class="bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs absolute left-10 inline-block"
+              <button class="bg-red-400 text-black hover:bg-red-500 rounded px-1 py-4 text-xs absolute left-10 inline-block"
                 @click="deleteBookmark(bookmark.id)">Delete</button>
             </div>
           </div>
@@ -259,25 +259,25 @@ const storedUsername = localStorage.getItem('username');
     <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No bookmarks found</div>
     <hr><br>
     <div class=" bg-gray-200 p-4 rounded-xl mr-8 ml-8 sm:hidden">
-<div class="flex justify-center items-center">
+<div class="flex text-black justify-center items-center">
   <p>View your page here!</p>
 </div>
   <div class="flex justify-center items-center mt-3">
-    <a :href="`/${storedUsername}`" class=" bg-gray-300 hover:bg-gray-400 rounded-xl py-2 px-2.5">faen.world/<b>{{ storedUsername }}</b></a>
+    <a :href="`/${storedUsername}`" class=" bg-gray-300 text-black hover:bg-gray-400 rounded-xl py-2 px-2.5">socify.no/<b>{{ storedUsername }}</b></a>
   </div>
 
   <br><hr>
 </div>
 
 <br>
-<button @click="toggleMenu" class="hamburger-button py-2 px-3 bg-gray-300 rounded hover:bg-gray-400 mb-14">{{ isMenuOpen ? 'close' : ' my pages' }}</button>
+<button @click="toggleMenu" class="hamburger-button py-2 px-3 bg-gray-300 rounded text-black hover:bg-gray-400 mb-14">{{ isMenuOpen ? 'close' : ' my pages' }}</button>
 
 <ul class="trans" :class="{ 'active': isMenuOpen }">
 
   <div>
     <form class="bookmark-form" @submit.prevent>
-      <input v-model="newPage" type="text" name="newpage" id="newpage" placeholder="Add page here" />
-      <button class="bg-gray-300 hover:bg-gray-400" @click="addPages">Add</button>
+      <input v-model="newPage" type="text" name="newpage" id="newpage" class="bg-white" placeholder="Add page here" />
+      <button class="bg-gray-300 text-black hover:bg-gray-400" @click="addPages">Add</button>
     </form>
     <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
     <div class="flex justify-center items-center" v-if="pending">Loading...</div>
@@ -288,7 +288,7 @@ const storedUsername = localStorage.getItem('username');
           <div class="flex">
             <div class="flex-none w-24 h-14"></div>
             <div class="flex-initial w-64">
-              <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-3 rounded-md text-sm text-white inline-block"
+              <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-3 rounded-md text-sm inline-block"
                 :href="/p/ + page.title" target="_blank" rel="noopener noreferrer">
                 
                 {{ page.title }}
@@ -298,9 +298,9 @@ const storedUsername = localStorage.getItem('username');
             
             <div class="flex-initial w-32 absolute">
   
-  <NuxtLink :to="`/dashboard/page1/${page.id}`" class="bg-gray-400 hover:bg-gray-500 absolute rounded px-3 py-4 text-xs inline-block">Edit links</NuxtLink>
+  <NuxtLink :to="`/dashboard/page1/${page.id}`" class="bg-gray-400 text-black hover:bg-gray-500 absolute rounded px-3 py-4 text-xs inline-block">Edit links</NuxtLink>
   
-  <button class="hidden sm:flex bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs ml-20 absolute left-64"
+  <button class="hidden sm:flex bg-red-400 text-black hover:bg-red-500 rounded px-1 py-4 text-xs ml-20 absolute left-64"
   @click="deletePage(page.id)">Delete</button>
   
 </div>

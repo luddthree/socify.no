@@ -65,7 +65,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 </div>
 
 <br>
-    <h1 class="text-center text-2xl font-bold">{{ id }}</h1>
+    <h1 class="text-center text-2xl text-black font-bold">{{ id }}</h1>
     <p class="text-xs text-center text-gray-700">no biograpy</p>
 <br>
 
@@ -77,7 +77,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
     <div class="flex justify-center items-center" v-else-if="bookmarks && bookmarks.length > 0">
       <ul>
   <li class="bookmark-list--item" v-for="bookmark in bookmarks" :key="bookmark.id">
-    <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm text-white inline-block" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
+    <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm inline-block" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
       <img :src="bookmark.icon_url" />
       
       {{ bookmark.url }}

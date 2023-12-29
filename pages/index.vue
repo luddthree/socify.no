@@ -17,7 +17,7 @@
       <div class="flex-auto w-4/5 mt-10">
         <img src="/example_phone.png" alt="example" class="" style="height: 88%;">
       </div>
-      <div class="flex-auto w-2/5 font-bold mt-10">
+      <div class="flex-auto w-2/5 font-bold mt-10 text-gray-900 ">
         <h1 style="font-size: 7.5rem; line-height: 0.93; letter-spacing: -4px;">
           All of your socials, in just one link.
         </h1>
@@ -37,7 +37,7 @@
 
       </div>
 
-      <div class="flex-auto w-2/5 font-bold">
+      <div class="flex-auto w-2/5 font-bold text-black">
         <br><br>
         <h1 style="font-size: 3.4rem; line-height: 0.93; letter-spacing: -2px;">
           All of your socials, in just one link.
@@ -93,7 +93,7 @@
       <div class="flex justify-center">
         <div>
           <div class="form-group">
-            <input class="form-control rounded py-3 px-16" type="text" v-model="inputUsername" placeholder="Username" />
+            <input class="form-control rounded py-3 px-16 bg-white" type="text" v-model="inputUsername" placeholder="Username" />
           </div>
         </div>
       </div>

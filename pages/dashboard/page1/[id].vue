@@ -181,7 +181,7 @@ const storedpage = localStorage.getItem('test');
 
       <br>
       <!-- display username of user -->
-      <h1 class="text-center text-2xl font-bold">{{ id }}</h1>
+      <h1 class="text-center text-2xl text-black font-bold">{{ id }}</h1>
       <p class="text-xs text-center text-gray-700">no biograpy</p>
       <br>
 
@@ -198,7 +198,7 @@ const storedpage = localStorage.getItem('test');
           <div class="flex">
             <div class="flex-none w-24 h-14"></div>
             <div class="flex-initial w-64">
-              <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm text-white inline-block"
+              <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm inline-block"
                 :href="bookmark.url" target="_blank" rel="noopener noreferrer">
                 <img :src="bookmark.icon_url" />
                 {{ bookmark.url }}

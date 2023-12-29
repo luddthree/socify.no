@@ -56,7 +56,7 @@ watch(
     >
       <!-- Header -->
       <header
-        class="bg-gray-200 px-4 flex justify-between items-center"
+        class="text-black bg-gray-200 px-4 flex justify-between items-center"
       >
         Customer Support Chat
         <button class="p-4 pr-0" @click="open = false">
@@ -79,10 +79,10 @@ watch(
       <!-- Messages -->
       <div class="messages p-4 overflow-y-scroll max-h-[80vh]" ref="messageBox">
         <div v-if="!messages.length" class="text-center w-[300px] m-auto">
-          <strong class="text-lg">Chat with SociBot!</strong>
-          <p>Our A.I. powered assistant</p>
-          <strong class="block mt-10">Go ahead and ask us something:</strong>
-          <ul class="list-inside list-disc text-left">
+          <strong class="text-lg text-black">Chat with SociBot!</strong>
+          <p class="text-black">Our A.I. powered assistant</p>
+          <strong class="block mt-10 text-black">Go ahead and ask us something:</strong>
+          <ul class="list-inside text-black list-disc text-left">
             <li>What is socify?</li>
             <li>How can I get human support?</li>
             <li>How was this tool built?</li>
@@ -104,7 +104,7 @@ watch(
       <footer class="p-4">
         <input
           ref="input"
-          class="input w-full px-2 block"
+          class="input w-full px-2 block bg-white"
           type="text"
           placeholder="Type your message"
           @keypress.enter="
