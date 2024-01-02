@@ -223,7 +223,8 @@ const storedUsername = localStorage.getItem('username');
 
 
 
-      <input v-model="newBookmark" type="url" name="url" id="url" class="bg-white" placeholder="Add your links here" />
+      <input v-model="newBookmark" type="url" name="url" id="url" class="bg-white" placeholder="Add your links here" /><br>
+      <input v-model="newBookmark" type="url" name="name" id="text" class="bg-white" placeholder="name" />
       <button class="bg-gray-300 text-black hover:bg-gray-400" @click="addBookmark">Add</button>
       <!-- <NuxtLink :to="`/dashboard/page1/${page.id}`"  @click="addBookmark" class="bg-gray-300 hover:bg-gray-400">Add</NuxtLink> -->
 
@@ -241,7 +242,7 @@ const storedUsername = localStorage.getItem('username');
               <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm inline-block"
                 :href="bookmark.url" target="_blank" rel="noopener noreferrer">
                 <img :src="bookmark.icon_url" />
-                {{ bookmark.url }}
+                {{ bookmark.name }}
               </a>
             </div>
             <div class=" absolute">

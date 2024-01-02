@@ -11,6 +11,7 @@ interface Bookmark {
   icon_version: number;
   createdAt: Date;
   updatedAt: Date;
+  name: string;
 }
 
 interface AddOptions {
@@ -48,12 +49,13 @@ export async function add(options: AddOptions) {
     icon_version: Math.floor(Date.now() / 1000),
     createdAt: new Date(),
     updatedAt: new Date(),
+    name: params.url,
   };
 
   const connection: PoolConnection = await pool.getConnection();
   try {
     await connection.execute(
-      'INSERT INTO bookmarks (id, userId, url, icon_url, icon_version, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO bookmarks (id, userId, url, icon_url, icon_version, created_at, updated_at, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
       [
         bookmark.id,
         bookmark.userId,
@@ -62,6 +64,7 @@ export async function add(options: AddOptions) {
         bookmark.icon_version,
         bookmark.createdAt,
         bookmark.updatedAt,
+        bookmark.name,
       ]
     );
     return bookmark;
