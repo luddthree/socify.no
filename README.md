@@ -1,4 +1,4 @@
-# Nuxt 3 Linktree v2
+# Nuxt 3 Socify.no
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
