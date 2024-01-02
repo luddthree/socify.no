@@ -77,7 +77,7 @@
   <div class="flex-initial w-[50%] text-center">
     <div class="flex flex-col items-center justify-center">
       <span>Donate Bitcoin:</span>
-      <a href="https://github.com/luddthree/socify.no" class="">
+      <a href="https://www.google.com/search?q=bc1qmkqklxtdvhpcvcy5p0s9k35ef5p8mda4zy937r" class="">
         <img src="/btc.png" class="w-16" />
       </a>
     </div>
