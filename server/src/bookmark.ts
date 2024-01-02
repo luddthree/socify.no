@@ -17,6 +17,7 @@ interface Bookmark {
 interface AddOptions {
   url: string
   userId: string
+  name: string
 }
 
 const pool: Pool = createPool({
@@ -49,7 +50,7 @@ export async function add(options: AddOptions) {
     icon_version: Math.floor(Date.now() / 1000),
     createdAt: new Date(),
     updatedAt: new Date(),
-    name: params.url,
+    name: params.name,
   };
 
   const connection: PoolConnection = await pool.getConnection();

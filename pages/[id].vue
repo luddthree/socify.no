@@ -80,7 +80,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
     <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm inline-block" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
       <img :src="bookmark.icon_url" />
       
-      {{ bookmark.url }}
+      {{ bookmark.name }}
       
     </a>
   </li>

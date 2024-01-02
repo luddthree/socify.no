@@ -3,6 +3,7 @@
 import { ref } from 'vue';
 
 const newBookmark = ref("")
+const newName = ref("")
 const newPage = ref("")
 const message = ref("")
 
@@ -20,17 +21,21 @@ const addBookmark = async () => {
   message.value = "";
   if (bookmarks.value == null) return;
   if (newBookmark.value == "") return;
+  if (newName.value == "") return;
 
   const bookmark = await $fetch('/api/bookmarks/create', {
-    method: 'post',
-    body: {
-      url: newBookmark.value,
-      userId: localStorage.getItem('userId')
-    }
-  });
+  method: 'post',
+  body: {
+    url: newBookmark.value,
+    userId: localStorage.getItem('userId'),
+    name: newName.value, // Ensure this is passed correctly
+  }
+});
+
 // @ts-ignore
   bookmarks.value.push(bookmark);
   newBookmark.value = "";
+  newName.value = "";
 }
 
 const addPages = async () => {
@@ -223,8 +228,9 @@ const storedUsername = localStorage.getItem('username');
 
 
 
-      <input v-model="newBookmark" type="url" name="url" id="url" class="bg-white" placeholder="Add your links here" /><br>
-      <input v-model="newBookmark" type="url" name="name" id="text" class="bg-white" placeholder="name" />
+      <input v-model="newBookmark" type="url" name="url" id="url" class="bg-white" placeholder="Add your links here" />
+      <input v-model="newName" type="text" name="name" id="text" class="bg-white" placeholder="Pagename" />
+
       <button class="bg-gray-300 text-black hover:bg-gray-400" @click="addBookmark">Add</button>
       <!-- <NuxtLink :to="`/dashboard/page1/${page.id}`"  @click="addBookmark" class="bg-gray-300 hover:bg-gray-400">Add</NuxtLink> -->
 
