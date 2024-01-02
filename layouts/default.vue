@@ -64,15 +64,36 @@
             <li class="mb-10"><NuxtLink to="/signup">Sign up</NuxtLink></li>
 </ol> -->
 
-<ol class="ml-6">
-            <li class="mt-10 mb-4 font-bold">Socials:</li>
-            <li><a href="https://www.instagram.com/"><img src="https://img.icons8.com/fluent/48/000000/instagram-new.png"/></a></li>
-            <li><a href="https://www.facebook.com/"><img src="https://img.icons8.com/fluent/48/000000/facebook-new.png"/></a></li>
-            <li><a href="https://www.youtube.com/"><img src="https://img.icons8.com/fluent/48/000000/youtube-play.png"/></a></li>
-            <li><a href="https://www.tiktok.com/"><img src="https://img.icons8.com/fluent/48/000000/tiktok.png"/></a></li>
-            <li><a href="https://www.snapchat.com/"><img src="https://img.icons8.com/fluent/48/000000/snapchat.png"/></a></li>
-            </ol>
-<br><br>
+<div class="ml-6 font-bold flex">
+  <div class="flex-initial w-[50%] text-center">
+    <div class="flex flex-col items-center justify-center">
+      <span>Github Project:</span>
+      <a href="https://github.com/luddthree/socify.no">
+        <img src="https://images.freeimages.com/fic/images/icons/2779/simple_icons/4096/github.png" class="w-16"/>
+      </a> 
+    </div>
+  </div>
+    
+  <div class="flex-initial w-[50%] text-center">
+    <div class="flex flex-col items-center justify-center">
+      <span>Donate Bitcoin:</span>
+      <a href="https://github.com/luddthree/socify.no" class="">
+        <img src="/btc.png" class="w-16" />
+      </a>
+    </div>
+  </div>
+</div>
+
+  
+  <!-- <li class="mt-10 mb-2 font-bold">Github Project:</li>
+  <li class="font-bold absolute">Github Project:</li>
+  <li class="w-16"></li> -->
+            <!-- <li class="mt-10 mb-4 font-bold">Socials:</li> -->
+            <!-- <li><a href="https://www.instagram.com/ludviktv05"><img src="https://img.icons8.com/fluent/48/000000/instagram-new.png"/></a></li> -->
+            
+
+            
+<br><br><br><br>
         </footer>
   </template>
   
