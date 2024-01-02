@@ -88,7 +88,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 
     </div>
 
-    <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No bookmarks found</div>
+    <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No links yet...</div>
 
     <div class="mb-56">
       <br><br><br><br><br>

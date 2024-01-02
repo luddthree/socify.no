@@ -236,7 +236,7 @@ const storedUsername = localStorage.getItem('username');
 
     </form>
     <!-- <div>{{ newBookmark }}</div> -->
-    <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
+    <!-- <div class="flex justify-center items-center" v-if="message">{{ message }}</div> -->
     <div class="flex justify-center items-center" v-if="pending">Loading...</div>
 
     <div class="flex justify-center items-center" v-else-if="bookmarks && bookmarks.length > 0">
@@ -263,7 +263,7 @@ const storedUsername = localStorage.getItem('username');
     </div>
   
 
-    <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No bookmarks found</div>
+    <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No links yet...</div>
     <hr><br>
     <div class=" bg-gray-200 p-4 rounded-xl mr-8 ml-8 sm:hidden">
 <div class="flex text-black justify-center items-center">
@@ -286,7 +286,7 @@ const storedUsername = localStorage.getItem('username');
       <input v-model="newPage" type="text" name="newpage" id="newpage" class="bg-white" placeholder="Add page here" />
       <button class="bg-gray-300 text-black hover:bg-gray-400" @click="addPages">Add</button>
     </form>
-    <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
+    <!-- <div class="flex justify-center items-center" v-if="message">{{ message }}</div> -->
     <div class="flex justify-center items-center" v-if="pending">Loading...</div>
 
     <div class="flex justify-center items-center" v-else-if="pages && pages.length > 0">

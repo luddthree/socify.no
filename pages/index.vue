@@ -55,7 +55,7 @@
 </div>
 
 <div class="mt-8 sm:mt-0 sm:mb-4">
-    <h1 class="text-center text-[#001d3d] sm:text-2xl text-lg" style="letter-spacing: -1px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua  Duis aute irure dolor .</h1>
+    <h1 class="text-center text-[#001d3d] sm:text-2xl text-lg" style="letter-spacing: -1px;">A streamlined platform where users can effortlessly consolidate all their social media profiles onto a single page, creating a convenient hub for their online presence.</h1>
     </div>
 <br><br>
 
@@ -71,7 +71,7 @@
 <br>
 <NuxtLink to="/signup" class="border hover:animate-none animate-pulse border-[#F64C72] hover:bg-[#F64C72] hover:text-[#2f2fa2] p-3 text-xl text-[#F64C72] font-bold" style="letter-spacing: -1.1px;">Get started here!</NuxtLink>
 <br>
-<h1 class="text-center text-lg sm:text-2xl sm:mb-36 sm:mt-4" style="letter-spacing: -1px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua  Duis aute irure dolor .</h1>
+<h1 class="text-center text-lg sm:text-2xl sm:mb-36 sm:mt-4" style="letter-spacing: -1px;">Sign up, create your page and share all your social platforms! <a href="/ludvik" class="text-gray-400">Example page</a></h1>
 <br><br><br><br><br><br><br><br><br><br><br><br>
     </div>
 
@@ -81,7 +81,7 @@
 <div class="bg-[#ddd92a] sm:h-screen">
     <br><br><br><br>
     <div class="sm:mt-56">
-    <h1 class="text-center text-[#001d3d] sm:text-2xl text-lg" style="letter-spacing: -1px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua  Duis aute irure dolor .</h1>
+    <h1 class="text-center text-[#001d3d] sm:text-2xl text-lg" style="letter-spacing: -1px;">Search and find other users' unique pages on Socify, where connecting with friends and discovering new networks is just a click away!</h1>
     </div>
     
     <br><br><br>
@@ -102,7 +102,7 @@
         <button type="submit" class="py-3 bg-[#001d3d] text-white font-bold hover:bg-black px-14 sm:mb-44" style="letter-spacing: -1px;">Search</button>
 
       </div>
-      <br><br>
+      <br><br><br><br>
     </form>
     
   </div>

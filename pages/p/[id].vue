@@ -86,7 +86,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
 
     </div>
 
-    <div class="flex justify-center items-center" v-else>No bookmarks found</div>
+    <div class="flex justify-center items-center" v-else>The user dosent no links yet...</div>
     <div class="mb-56">
       <br><br><br><br><br>
       <br><br><br><br><br>
