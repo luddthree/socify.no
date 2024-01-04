@@ -27,6 +27,28 @@ const signup = async () => {
 
 }
 
+// const addBookmark = async () => {
+//   message.value = "";
+//   if (bookmarks.value == null) return;
+//   if (newBookmark.value == "") return;
+//   if (newName.value == "") return;
+
+//   const bookmark = await $fetch('/api/bookmarks/create', {
+//   method: 'post',
+//   body: {
+//     url: newBookmark.value,
+//     userId: localStorage.getItem('userId'),
+//     name: newName.value, // Ensure this is passed correctly
+//   }
+// });
+
+// // @ts-ignore
+//   bookmarks.value.push(bookmark);
+//   newBookmark.value = "";
+//   newName.value = "";
+// }
+
+
 
 </script>
 

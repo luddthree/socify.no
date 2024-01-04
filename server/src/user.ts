@@ -3,19 +3,19 @@ import { randomUUID } from 'node:crypto';
 import z from 'zod';
 import { generateIconURL } from './utils';
 
-interface Bookmark {
+interface User {
   id: string;
-  pageId: string,
-  url: string;
-  icon_url: string;
-  icon_version: number;
-  createdAt: Date;
-  updatedAt: Date;
+  username: string;
+  email: string;
+  password: string;
 }
 
 interface AddOptions {
   url: string
-  pageId: string
+  userId: string
+  name: string
+  password: string
+  email: string
 }
 
 const pool: Pool = createPool({
@@ -26,12 +26,11 @@ const pool: Pool = createPool({
   connectionLimit: 10, // Adjust as needed
 });
 
-export async function list(pageId:string) {
+export async function list(userId:string) {
   const connection: PoolConnection = await pool.getConnection();
   try {
     // @ts-ignore
-    const [ rows ]: Bookmark[] = await connection.query('SELECT * FROM pagelinks where pageId="' + pageId
-    + '"');
+    const [ rows ]: Bookmark[] = await connection.query('SELECT * FROM bookmarks where userId=' + userId);
     return rows;
   } finally {
     connection.release();
@@ -41,31 +40,26 @@ export async function list(pageId:string) {
 export async function add(options: AddOptions) {
   const params = options;
 
-  const bookmark: Bookmark = {
+  const Usr: User = {
     id: randomUUID(),
-    pageId: params.pageId,
-    url: params.url,
-    icon_url: generateIconURL(params.url),
-    icon_version: Math.floor(Date.now() / 1000),
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    username: params.name,
+    email: params.email,
+    password: params.password,
   };
 
   const connection: PoolConnection = await pool.getConnection();
   try {
     await connection.execute(
-      'INSERT INTO pagelinks (id, pageId, url, icon_url, icon_version, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO user (id, name, email, password) VALUES (?, ?, ?, ?)',
       [
-        bookmark.id,
-        bookmark.pageId,
-        bookmark.url,
-        bookmark.icon_url,
-        bookmark.icon_version,
-        bookmark.createdAt,
-        bookmark.updatedAt,
+        Usr.id,
+        Usr.username,
+        Usr.email,
+        Usr.password,
+
       ]
     );
-    return bookmark;
+    return Usr;
   } finally {
     connection.release();
   }
@@ -84,14 +78,14 @@ export async function deleteBookmark(options: DeleteOptions) {
 
   const connection: PoolConnection = await pool.getConnection();
   try {
-    const [ existingBookmark ] = await connection.query('SELECT id FROM pagelinks WHERE id = ?', [params.id]);
+    const [ existingBookmark ] = await connection.query('SELECT id FROM bookmarks WHERE id = ?', [params.id]);
     
     // @ts-ignore
     if (!existingBookmark[0]) {
       return { message: `Bookmark with ID ${params.id} not found.` };
     }
 
-    await connection.execute('DELETE FROM pagelinks WHERE id = ?', [params.id]);
+    await connection.execute('DELETE FROM bookmarks WHERE id = ?', [params.id]);
 
     return { message: `Bookmark with ID ${params.id} has been deleted.` };
   } finally {

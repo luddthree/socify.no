@@ -17,16 +17,16 @@ const { data: pages } = useAsyncData(async () =>// @ts-ignore
 ))
 
  
-const { data: title } = useAsyncData(async () =>
-  $fetch("/api/pages/gettitle?title=" + id +
-  localStorage.setItem('test', id)
+// const { data: title } = useAsyncData(async () =>
+//   $fetch("/api/pages/gettitle?title=" + id +
+//   localStorage.setItem('test', id)
 
 
-))
+// ))
 // @ts-ignore
 
-const { data: thisPage } = useAsyncData(async () =>// @ts-ignore
-  $fetch("/api/pages?id=" + id))
+// const { data: thisPage } = useAsyncData(async () =>// @ts-ignore
+//   $fetch("/api/pages?id=" + id))
 
 const addBookmark = async () => {
   message.value = "";

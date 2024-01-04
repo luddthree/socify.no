@@ -32,7 +32,8 @@ export async function list(userId:string) {
   const connection: PoolConnection = await pool.getConnection();
   try {
     // @ts-ignore
-    const [ rows ]: Bookmark[] = await connection.query('SELECT * FROM bookmarks where userId=' + userId);
+    const [ rows ]: Bookmark[] = await connection.query('SELECT * FROM bookmarks where userId="' + userId
+    + '"');
     return rows;
   } finally {
     connection.release();
@@ -45,6 +46,7 @@ export async function add(options: AddOptions) {
   const bookmark: Bookmark = {
     id: randomUUID(),
     userId: params.userId,
+    // userId: randomUUID(),
     url: params.url,
     icon_url: generateIconURL(params.url),
     icon_version: Math.floor(Date.now() / 1000),

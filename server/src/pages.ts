@@ -28,7 +28,9 @@ export async function list(user_id:number) {
   try {
     // @ts-ignore
 
-    const [ rows ]: Page[] = await connection.query('SELECT * FROM pages where user_id=' + user_id);
+    // const [ rows ]: Page[] = await connection.query('SELECT * FROM pages where user_id="' + user_id + '"');
+    const [ rows ]: Page[] = await connection.query('SELECT * FROM pages WHERE user_id = ?', [user_id]);
+
     return rows;
   } finally {
     connection.release();
@@ -40,7 +42,8 @@ export async function getbyid(id:number) {
   try {
     // @ts-ignore
 
-    const  page : Page = await connection.query('SELECT * FROM pages where id=' + id);
+    const  page : Page = await connection.query('SELECT * FROM pages where id="' + id
+    + '"');
     return page;
   } finally {
     connection.release();
@@ -51,7 +54,8 @@ export async function gettitle(title:string) {
   try {
     // @ts-ignore
 
-    const  [rows] : Page[] = await connection.query('SELECT * FROM pages where title=' + title);
+    const  [rows] : Page[] = await connection.query('SELECT * FROM pages where title="' + title
+    + '"');
     return rows;
   } finally {
     connection.release();
