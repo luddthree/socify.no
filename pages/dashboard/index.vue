@@ -45,18 +45,27 @@ const addBio = async () => {
   if (newBio.value == "") return;
 
   const bio = await $fetch('/api/bio/create', {
-  method: 'post',
-  body: {
-    bios: newBio.value, // Changed from 'url' to 'bios'
-    id: localStorage.getItem('userId'),
+    method: 'post',
+    body: {
+      bios: newBio.value,
+      id: localStorage.getItem('userId'),
+    }
+  });
+
+  // Update local state
+  if (bios.value && bios.value.length > 0) {
+    bios.value[0].bio = newBio.value; // Update existing bio
+  } else {
+    bios.value = [{ bio: newBio.value }]; // Add new bio if none existed
   }
-});
 
-
-// @ts-ignore
-  bios.value.push(bio);
   newBio.value = "";
+  
 }
+
+
+
+
 const fetchBio = async () => {
   try {
     const userId = localStorage.getItem('userId');
@@ -262,7 +271,12 @@ const storedUsername = localStorage.getItem('username');
 
       <!-- display username of user -->
       <h1 class="text-center text-2xl text-black font-bold">{{ storedUsername }}</h1>
-      <p class="text-xs text-center text-gray-700">{{ newBio }}</p>
+      <!-- <p class="text-xs text-center text-gray-700">{{ bios }}</p> -->
+      <p class="text-xs text-center text-gray-700">
+  {{
+    bios && bios.length > 0 && bios[0].bio ? bios[0].bio : 'no biograpy'
+  }}
+
 
       <ul class="trans " :class="{ 'active': biomenu }">
               
@@ -278,7 +292,7 @@ const storedUsername = localStorage.getItem('username');
          
 
             
-          </div>
+          </div></p><br>
 
 
 

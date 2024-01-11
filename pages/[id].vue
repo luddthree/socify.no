@@ -18,6 +18,9 @@ const response = await $fetch('/api/user/search', {
 const { pending, data: bookmarks } = useAsyncData(async () =>
   $fetch("/api/bookmarks?userId=" + response.id))
 
+  const { data: bios } = useAsyncData(async () =>
+  $fetch("/api/bio?userId=" + localStorage.getItem('userId')))
+
 
 
 
@@ -66,7 +69,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 
 <br>
     <h1 class="text-center text-2xl text-black font-bold">{{ id }}</h1>
-    <p class="text-xs text-center text-gray-700">no biograpy</p>
+    <p class="text-xs text-center text-gray-700">{{ bios && bios.length > 0 ? bios[0].bio : 'No bio available' }}</p>
 <br>
 
       <!-- <div>{{ newBookmark }}</div> -->
