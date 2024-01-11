@@ -40,7 +40,6 @@ export async function list(userId:string) {
 
 
 export async function add(options: AddOptions) {
-  console.log("add function called with options:");
   const params = options;
 
   const addbio: Bio = {
@@ -49,7 +48,7 @@ export async function add(options: AddOptions) {
   };
 
   // Log the addbio object to check its properties
-  console.log('addbio:', addbio);
+  // console.log('addbio:', addbio);
 
   const connection: PoolConnection = await pool.getConnection();
   try {
