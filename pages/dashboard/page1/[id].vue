@@ -37,7 +37,7 @@ const addBookmark = async () => {
     method: 'post',
     body: {
       url: newBookmark.value,
-      pageId: id
+      pageId: id,
     }
   });
 

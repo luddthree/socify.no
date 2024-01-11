@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const newBookmark = ref("")
 const newName = ref("")
+const newBio = ref("")
 const newPage = ref("")
 const message = ref("")
+
 
 const { pending, data: bookmarks } = useAsyncData(async () =>
   $fetch("/api/bookmarks?userId=" + localStorage.getItem('userId')))
@@ -13,9 +14,9 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 const { data: pages } = useAsyncData(async () =>
   $fetch("/api/pages?userId=" + localStorage.getItem('userId')))
 
-const edit1 = async () => {
-  localStorage.setItem('test', page.title)
-}
+const { data: bios } = useAsyncData(async () =>
+  $fetch("/api/bio?userId=" + localStorage.getItem('userId')))
+
 
 const addBookmark = async () => {
   message.value = "";
@@ -37,6 +38,43 @@ const addBookmark = async () => {
   newBookmark.value = "";
   newName.value = "";
 }
+
+const addBio = async () => {
+  message.value = "";
+  if (bios.value == null) return;
+  if (newBio.value == "") return;
+
+  const bio = await $fetch('/api/bio/create', {
+  method: 'post',
+  body: {
+    bios: newBio.value, // Changed from 'url' to 'bios'
+    id: localStorage.getItem('userId'),
+  }
+});
+
+
+// @ts-ignore
+  bios.value.push(bio);
+  newBio.value = "";
+}
+const fetchBio = async () => {
+  try {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      const response = await fetch('/api/getBio?userId=' + userId);
+      const data = await response.json();
+      newBio.value = data[0]?.bio ?? ''; // Assuming the API returns an array
+    }
+  } catch (error) {
+    console.error('Error fetching bio:', error);
+  }
+};
+
+onMounted(fetchBio);
+
+
+
+
 
 const addPages = async () => {
   message.value = "";
@@ -224,7 +262,23 @@ const storedUsername = localStorage.getItem('username');
 
       <!-- display username of user -->
       <h1 class="text-center text-2xl text-black font-bold">{{ storedUsername }}</h1>
-      <p class="text-xs text-center text-gray-700">no biograpy</p>
+      <p class="text-xs text-center text-gray-700">{{ newBio }}</p>
+
+      <ul class="trans " :class="{ 'active': biomenu }">
+              
+              <input v-model="newBio" type="text" name="bio" id="bio" placeholder="ad bio here">  <br>
+              <button class="bg-gray-300 text-black hover:bg-gray-400" @click="addBio">Add</button>
+       
+            </ul>
+
+
+      <div class="">
+            <button @click="togglebio" class="text-gray-700" style="font-size: 20px;">{{ biomenu ? '⊗' : ' ✎' }}</button>
+            
+         
+
+            
+          </div>
 
 
 
@@ -338,6 +392,7 @@ export default {
       inputUsername: '',
       isMenuOpen: false,
       inputmenu: false,
+      biomenu: false,
     }
   },
 
@@ -347,10 +402,17 @@ export default {
       this.isMenuOpen2 = false;
       this.isMenuOpen = !this.isMenuOpen;
       },
+
       togglepfp() {
       // @ts-ignore
       this.inputmenu = !this.inputmenu;
+
       },
+      togglebio() {
+      // @ts-ignore
+      this.biomenu = !this.biomenu;
+      },
+
     async searchuser() {
       const usr = await $fetch('/api/user/search', {
         method: 'post',
