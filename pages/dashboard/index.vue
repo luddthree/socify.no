@@ -272,27 +272,22 @@ const storedUsername = localStorage.getItem('username');
       <!-- display username of user -->
       <h1 class="text-center text-2xl text-black font-bold">{{ storedUsername }}</h1>
       <!-- <p class="text-xs text-center text-gray-700">{{ bios }}</p> -->
-      <p class="text-xs text-center text-gray-700">
+      <p class="text-s text-center cursor-pointer text-gray-700 " @click="togglebio">
   {{
     bios && bios.length > 0 && bios[0].bio ? bios[0].bio : 'no biograpy'
-  }}
+    
+  }} {{ biomenu ? ' ⊗' : ' ✎' }}</p>
+  <!-- <button @click="togglebio" class="text-gray-700" style="font-size: 17px;">{{ biomenu ? '⊗' : ' ✎' }}</button> -->
 
 
       <ul class="trans " :class="{ 'active': biomenu }">
               
-              <input v-model="newBio" type="text" name="bio" id="bio" placeholder="ad bio here">  <br>
-              <button class="bg-gray-300 text-black hover:bg-gray-400" @click="addBio">Add</button>
+              <input v-model="newBio" type="text" name="bio" id="bio" placeholder="add bio here">  <br>
+              <button class="bg-gray-300 text-black hover:bg-gray-400" @click="addBio(), togglebio()">Save</button>
        
             </ul>
 
-
-      <div class="">
-            <button @click="togglebio" class="text-gray-700" style="font-size: 20px;">{{ biomenu ? '⊗' : ' ✎' }}</button>
-            
-         
-
-            
-          </div></p><br>
+<br>
 
 
 
@@ -488,7 +483,11 @@ ul.active {
   margin-bottom: 50px;
 }
 
-
+.b ,
+.b  {
+  padding: 0.5em;
+  width: 100px;
+}
 .bookmark-form input,
 .bookmark-form button {
   padding: 0.5em;

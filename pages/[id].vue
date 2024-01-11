@@ -69,7 +69,7 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 
 <br>
     <h1 class="text-center text-2xl text-black font-bold">{{ id }}</h1>
-    <p class="text-xs text-center text-gray-700">{{ bios && bios.length > 0 ? bios[0].bio : 'No bio available' }}</p>
+    <p class="text-s text-center text-gray-700">{{ bios && bios.length > 0 ? bios[0].bio : ' ' }}</p>
 <br>
 
       <!-- <div>{{ newBookmark }}</div> -->
