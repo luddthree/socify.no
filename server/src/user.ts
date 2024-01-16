@@ -49,6 +49,19 @@ export async function add(options: AddOptions) {
 
   const connection: PoolConnection = await pool.getConnection();
   try {
+    // Check if a user with the same username already exists
+    // @ts-ignore
+    const [existingUsers]: [User[]] = await connection.query(
+      'SELECT * FROM user WHERE name = ?',
+      [Usr.username]
+    );
+
+    if (existingUsers.length > 0) {
+      // User with the same username already exists
+      return { error: 'Username already taken.' };
+    }
+
+    // Insert new user since username is not taken
     await connection.execute(
       'INSERT INTO user (id, name, email, password) VALUES (?, ?, ?, ?)',
       [
@@ -56,7 +69,6 @@ export async function add(options: AddOptions) {
         Usr.username,
         Usr.email,
         Usr.password,
-
       ]
     );
     return Usr;
@@ -64,6 +76,7 @@ export async function add(options: AddOptions) {
     connection.release();
   }
 }
+
 
 interface DeleteOptions {
   id: string;

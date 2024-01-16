@@ -102,7 +102,7 @@
             localStorage.setItem('username', this.inputUsername); // Store the username
             await navigateTo('/dashboard')
         } else {
-            alert("Invalid Login")
+            alert("Wrong username or password.")
         }
         
       },
