@@ -18,8 +18,11 @@ const response = await $fetch('/api/user/search', {
 const { pending, data: bookmarks } = useAsyncData(async () =>
   $fetch("/api/bookmarks?userId=" + response.id))
 
-  const { data: bios } = useAsyncData(async () =>
-  $fetch("/api/bio?userId=" + localStorage.getItem('userId')))
+const { data: bios } = useAsyncData(async () =>
+  $fetch("/api/bio?userId=" + response.id))
+
+  // const { data: bios } = useAsyncData(async () =>
+  // $fetch("/api/bio?userId=" + localStorage.getItem('userId')))
 
 
 
@@ -70,7 +73,12 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
 <br>
     <h1 class="text-center text-2xl text-black font-bold">{{ id }}</h1>
     <p class="text-s text-center text-gray-700">{{ bios && bios.length > 0 ? bios[0].bio : ' ' }}</p>
+
+    
+
 <br>
+
+
 
       <!-- <div>{{ newBookmark }}</div> -->
       <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
@@ -149,7 +157,6 @@ const { pending, data: bookmarks } = useAsyncData(async () =>
   scale: 1.15;
   
 }
-
 
 .bookmark-list--item a{
 text-decoration: none;
