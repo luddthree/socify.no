@@ -3,23 +3,14 @@ import { randomUUID } from 'node:crypto';
 import z from 'zod';
 import { generateIconURL } from './utils';
 
-interface Bookmark {
+interface Bio {
+  bio: string;
   id: string;
-  pageId: string,
-  url: string;
-  icon_url: string;
-  icon_version: number;
-  createdAt: Date;
-  updatedAt: Date;
-  name: string
-
 }
 
 interface AddOptions {
-  url: string
-  pageId: string
-  name: string
-
+  bios: string
+  id: string
 }
 
 const pool: Pool = createPool({
@@ -30,11 +21,11 @@ const pool: Pool = createPool({
   connectionLimit: 10, // Adjust as needed
 });
 
-export async function list(pageId:string) {
+export async function list(userId:string) {
   const connection: PoolConnection = await pool.getConnection();
   try {
     // @ts-ignore
-    const [ rows ]: Bookmark[] = await connection.query('SELECT * FROM pagelinks where pageId="' + pageId
+    const [ rows ]: Bio[] = await connection.query('SELECT * FROM pages where id="' + userId
     + '"');
     return rows;
   } finally {
@@ -42,42 +33,38 @@ export async function list(pageId:string) {
   }
 }
 
+
+
+
+
+
+
 export async function add(options: AddOptions) {
   const params = options;
 
-  const bookmark: Bookmark = {
-    id: randomUUID(),
-    pageId: params.pageId,
-    url: params.url,
-    icon_url: generateIconURL(params.url),
-    icon_version: Math.floor(Date.now() / 1000),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    name: params.name,
-
+  const addbio: Bio = {
+    id: params.id,
+    bio: params.bios,
   };
+
+  // Log the addbio object to check its properties
+  // console.log('addbio:', addbio);
 
   const connection: PoolConnection = await pool.getConnection();
   try {
+    // Update the bio of the existing user with the provided id
     await connection.execute(
-      'INSERT INTO pagelinks (id, pageId, url, icon_url, icon_version, created_at, updated_at, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [
-        bookmark.id,
-        bookmark.pageId,
-        bookmark.url,
-        bookmark.icon_url,
-        bookmark.icon_version,
-        bookmark.createdAt,
-        bookmark.updatedAt,
-        bookmark.name,
-
-      ]
+      'UPDATE pages SET bio = ? WHERE id = ?',
+      [params.bios, params.id]
     );
-    return bookmark;
+
+    return { id: params.id, bio: params.bios };
   } finally {
     connection.release();
   }
 }
+
+
 
 interface DeleteOptions {
   id: string;
@@ -92,14 +79,14 @@ export async function deleteBookmark(options: DeleteOptions) {
 
   const connection: PoolConnection = await pool.getConnection();
   try {
-    const [ existingBookmark ] = await connection.query('SELECT id FROM pagelinks WHERE id = ?', [params.id]);
+    const [ existingBookmark ] = await connection.query('SELECT id FROM bookmarks WHERE id = ?', [params.id]);
     
     // @ts-ignore
     if (!existingBookmark[0]) {
       return { message: `Bookmark with ID ${params.id} not found.` };
     }
 
-    await connection.execute('DELETE FROM pagelinks WHERE id = ?', [params.id]);
+    await connection.execute('DELETE FROM bookmarks WHERE id = ?', [params.id]);
 
     return { message: `Bookmark with ID ${params.id} has been deleted.` };
   } finally {

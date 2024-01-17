@@ -1,6 +1,6 @@
-<script lang="ts" setup>// @ts-ignore
-const message = ref("")// @ts-ignore
-const { id } = useRoute().params// @ts-ignore
+<script lang="ts" setup>
+const message = ref("")
+const { id } = useRoute().params
 const response = await $fetch('/api/user/search_pages', {
     method: 'post',
     body: {
@@ -9,7 +9,7 @@ const response = await $fetch('/api/user/search_pages', {
 })
 
 
-if (!response) {// @ts-ignore
+if (!response) {
         throw createError({ statusCode: 404, message: 'Username not found', fatal: true})
     }
 
@@ -17,6 +17,12 @@ if (!response) {// @ts-ignore
 // @ts-ignore
 const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
   $fetch("/api/pagelinks?pageId=" + response.id))
+
+const { data: bios } = useAsyncData(async () =>
+  $fetch("/api/pagelinks?pageId=" + response.id))
+
+  // const { data: bios } = useAsyncData(async () =>
+  // $fetch("/api/bio?userId=" + localStorage.getItem('userId')))
 
 
 
@@ -66,8 +72,14 @@ const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
 
 <br>
     <h1 class="text-center text-2xl text-black font-bold">{{ id }}</h1>
+    <!-- <p class="text-s text-center text-gray-700">{{ bios && bios.length > 0 ? bios[0].bio : ' ' }}</p> -->
     <p class="text-xs text-center text-gray-700">no biograpy</p>
+
+    
+
 <br>
+
+
 
       <!-- <div>{{ newBookmark }}</div> -->
       <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
@@ -76,9 +88,10 @@ const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
     <div class="flex justify-center items-center" v-else-if="bookmarks && bookmarks.length > 0">
       <ul>
   <li class="bookmark-list--item" v-for="bookmark in bookmarks" :key="bookmark.id">
-    <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm text-white inline-block" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
+    <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 pr-7 py-2 rounded-md text-sm inline-block" :href="bookmark.url" target="_blank" rel="noopener noreferrer">
       <img :src="bookmark.icon_url" />
-      {{ bookmark.url }}
+      
+      {{ bookmark.name }}
       
     </a>
   </li>
@@ -86,9 +99,9 @@ const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
 
     </div>
 
-    <div class="flex justify-center items-center" v-else>The user dosent no links yet...</div>
+    <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No links yet...</div>
+
     <div class="mb-56">
-      <br><br><br><br><br>
       <br><br><br><br><br>
     </div>
   </main>
@@ -144,7 +157,6 @@ const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
   scale: 1.15;
   
 }
-
 
 .bookmark-list--item a{
 text-decoration: none;

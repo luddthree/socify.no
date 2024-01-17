@@ -6,6 +6,10 @@ const { id } = useRoute().params
 const newBookmark = ref("")
 const newPage = ref("")
 const message = ref("")
+const newName = ref("")
+const newBio = ref("")
+
+
 // @ts-ignore
 
 const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
@@ -15,6 +19,13 @@ const { pending, data: bookmarks } = useAsyncData(async () =>// @ts-ignore
 const { data: pages } = useAsyncData(async () =>// @ts-ignore
   $fetch("/api/pages?userId=" + localStorage.getItem('userId')
 ))
+
+const { data: bios } = useAsyncData(async () =>
+  $fetch("/api/pagebio?userId=" + localStorage.getItem('userId')))
+
+// const { data: pages } = useAsyncData(async () =>// @ts-ignore
+//   $fetch("/api/pages?userId=" + response.id))
+
 
  
 // const { data: title } = useAsyncData(async () =>
@@ -28,24 +39,71 @@ const { data: pages } = useAsyncData(async () =>// @ts-ignore
 // const { data: thisPage } = useAsyncData(async () =>// @ts-ignore
 //   $fetch("/api/pages?id=" + id))
 
+// const addBookmark = async () => {
+//   message.value = "";
+//   if (bookmarks.value == null) return;
+//   if (newBookmark.value == "") return;
+// // @ts-ignore
+//   const bookmark = await $fetch('/api/pagelinks/create', {
+//     method: 'post',
+//     body: {
+//       url: newBookmark.value,
+//       pageId: id,
+//     }
+//   });
+
+//   bookmarks.value.push(bookmark);
+//   newBookmark.value = "";
+
+  
+// }
+
 const addBookmark = async () => {
   message.value = "";
   if (bookmarks.value == null) return;
   if (newBookmark.value == "") return;
-// @ts-ignore
+  if (newName.value == "") return;
+
   const bookmark = await $fetch('/api/pagelinks/create', {
+  method: 'post',
+  body: {
+    url: newBookmark.value,
+    pageId: id,
+    name: newName.value, // Ensure this is passed correctly
+  }
+});
+
+// @ts-ignore
+  bookmarks.value.push(bookmark);
+  newBookmark.value = "";
+  newName.value = "";
+}
+
+const addBio = async () => {
+  message.value = "";
+  if (bios.value == null) return;
+  if (newBio.value == "") return;
+
+  const bio = await $fetch('/api/pagebio/create', {
     method: 'post',
     body: {
-      url: newBookmark.value,
-      pageId: id,
+      bios: newBio.value,
+      id: localStorage.getItem('userId'),
     }
   });
 
-  bookmarks.value.push(bookmark);
-  newBookmark.value = "";
+  // Update local state
+  if (bios.value && bios.value.length > 0) {
+    bios.value[0].bio = newBio.value; // Update existing bio
+  } else {
+    bios.value = [{ bio: newBio.value }]; // Add new bio if none existed
+  }
 
+  newBio.value = "";
   
 }
+
+
 
 const addPages = async () => {
   message.value = "";
@@ -170,26 +228,65 @@ const storedpage = localStorage.getItem('test');
       <div>
         <div class="container mt-10">
           <div class="flex justify-center items-center">
-            
-            <img class="w-32 h-32 rounded-full overflow-hidden mt-12" :src="image || '/pfp.jpg'" alt="">
-          </div><br>
+
+            <img class="w-32 h-32 rounded-full overflow-hidden mt-12"  :src="image || '/pfp.jpg'" alt="">
+          </div>
           <div class="">
-            <input @change="handleImage" type="file" accept="image/*" class="absolute">
+            <button @click="togglepfp" class="text-gray-700" style="font-size: 20px;">{{ inputmenu ? '⊗' : ' ✎' }}</button>
+            
+            <ul class="trans " :class="{ 'active': inputmenu }">
+            <input @change="handleImage" type="file" accept="image/*" class="text-gray-800">
+            </ul>
+
+            
           </div>
         </div>
       </div>
 
-      <br>
+
+
+
+      <div class="absolute mt-40 right-72 bg-gray-200 p-4 rounded-xl hidden sm:grid">
+<div class="flex text-black justify-center items-center">
+  <p>View your page here!</p>
+</div>
+  <div class="flex justify-center items-center mt-3">
+    <a :href="`/p/${id}`" class=" bg-gray-300 text-black hover:bg-gray-400 rounded-xl py-2 px-2.5">socify.no/p/<b>{{ id }}</b></a>
+  </div>
+</div>
+
+
       <!-- display username of user -->
       <h1 class="text-center text-2xl text-black font-bold">{{ id }}</h1>
-      <p class="text-xs text-center text-gray-700">no biograpy</p>
-      <br>
+      <!-- <p class="text-xs text-center text-gray-700">{{ bios }}</p> -->
+      <p class="text-s text-center cursor-pointer text-gray-700 " @click="togglebio">
+  {{
+    bios && bios.length > 0 && bios[0].bio ? bios[0].bio : 'no biograpy'
+    
+  }} {{ biomenu ? ' ⊗' : ' ✎' }}</p>
+  <!-- <button @click="togglebio" class="text-gray-700" style="font-size: 17px;">{{ biomenu ? '⊗' : ' ✎' }}</button> -->
 
-      <input v-model="newBookmark" type="url" name="url" id="url" placeholder="Add your links here" required />
-      <button class="bg-gray-300 hover:bg-gray-400" @click="addBookmark">Add</button>
+
+      <ul class="trans " :class="{ 'active': biomenu }">
+              
+              <input v-model="newBio" type="text" name="bio" id="bio" placeholder="add bio here">  <br>
+              <button class="bg-gray-300 text-black hover:bg-gray-400" @click="addBio(), togglebio()">Save</button>
+       
+            </ul>
+
+<br>
+
+
+
+      <input v-model="newBookmark" type="url" name="url" id="url" class="bg-white" placeholder="Add your links here" />
+      <input v-model="newName" type="text" name="name" id="text" class="bg-white" placeholder="Pagename" />
+
+      <button class="bg-gray-300 text-black hover:bg-gray-400" @click="addBookmark">Add</button>
+      <!-- <NuxtLink :to="`/dashboard/page1/${page.id}`"  @click="addBookmark" class="bg-gray-300 hover:bg-gray-400">Add</NuxtLink> -->
+
     </form>
     <!-- <div>{{ newBookmark }}</div> -->
-    <div class="flex justify-center items-center" v-if="message">{{ message }}</div>
+    <!-- <div class="flex justify-center items-center" v-if="message">{{ message }}</div> -->
     <div class="flex justify-center items-center" v-if="pending">Loading...</div>
 
     <div class="flex justify-center items-center" v-else-if="bookmarks && bookmarks.length > 0">
@@ -201,11 +298,11 @@ const storedpage = localStorage.getItem('test');
               <a class="bookmark-link bg-gray-200 hover:bg-gray-300 text-white px-3 py-2 rounded-md text-sm inline-block"
                 :href="bookmark.url" target="_blank" rel="noopener noreferrer">
                 <img :src="bookmark.icon_url" />
-                {{ bookmark.url }}
+                {{ bookmark.name }}
               </a>
             </div>
-            <div class="flex-initial w-32">
-              <button class="bg-red-400 hover:bg-red-500 rounded px-1 py-4 text-xs inline-block"
+            <div class=" absolute">
+              <button class="bg-red-400 text-black hover:bg-red-500 rounded px-1 py-4 text-xs absolute left-10 inline-block"
                 @click="deleteBookmark(bookmark.id)">Delete</button>
             </div>
           </div>
@@ -216,9 +313,23 @@ const storedpage = localStorage.getItem('test');
     </div>
   
 
-    <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No bookmarks found</div>
+    <div class="flex justify-center items-center text-gray-900 text-sm" v-else>No links yet...</div>
+    <hr><br>
+    <div class=" bg-gray-200 p-4 rounded-xl mr-8 ml-8 sm:hidden">
+<div class="flex text-black justify-center items-center">
+  <p>View your page here!</p>
+</div>
+  <div class="flex justify-center items-center mt-3">
+    <a :href="`/p/${id}`" class=" bg-gray-300 text-black hover:bg-gray-400 rounded-xl py-2 px-2.5">socify.no/p/<b>{{ id }}</b></a>
+  </div>
 
-<br><br><br>
+  <br>
+</div>
+
+<br>
+
+
+
   </main>
 </template>
 
@@ -230,14 +341,29 @@ export default {
       image: '',
       inputUsername: '',
       isMenuOpen: false,
+      inputmenu: false,
+      biomenu: false,
     }
   },
 
   methods: {
     toggleMenu() {
-        this.isMenuOpen = !this.isMenuOpen;
+      // @ts-ignore
+      this.isMenuOpen2 = false;
+      this.isMenuOpen = !this.isMenuOpen;
       },
-    async searchuser() {// @ts-ignore
+
+      togglepfp() {
+      // @ts-ignore
+      this.inputmenu = !this.inputmenu;
+
+      },
+      togglebio() {
+      // @ts-ignore
+      this.biomenu = !this.biomenu;
+      },
+
+    async searchuser() {
       const usr = await $fetch('/api/user/search', {
         method: 'post',
         body: {
@@ -250,10 +376,12 @@ export default {
       this.createBase64Image(file);
       console.log(file);
     },
+    // @ts-ignore
     createBase64Image(fileObject) {
       const reader = new FileReader();
 
-      reader.onload = (e) => {// @ts-ignore
+      reader.onload = (e) => {
+        // @ts-ignore
         this.image = e.target.result;// @ts-ignore
         console.log(image);
       };
