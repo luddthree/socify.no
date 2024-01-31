@@ -106,9 +106,17 @@
     </form>
     
   </div>
+
+<br><br><br><br><br>
+<div>
+  <MyCounter/>
+</div>
+
 </template>
 
 <script lang="ts">
+import MyCounter from '~/components/MyCounter.vue';
+
 export default {
   data() {
     return {

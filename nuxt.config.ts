@@ -7,7 +7,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    '@nuxtjs/tailwindcss', "@vueuse/nuxt"
+    '@nuxtjs/tailwindcss', "@vueuse/nuxt", "@pinia/nuxt"
   ],
   
   ssr: false,

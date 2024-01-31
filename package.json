@@ -21,6 +21,7 @@
   "dependencies": {
     "@databases/sqlite": "^4.0.2",
     "@nuxtjs/tailwindcss": "^6.6.4",
+    "@pinia/nuxt": "^0.5.1",
     "@vueuse/nuxt": "^9.13.0",
     "curl": "^0.1.4",
     "daisyui": "^2.52.0",
@@ -34,9 +35,11 @@
     "nuxt-storage": "^1.2.2",
     "nvm": "^0.0.4",
     "openai": "^3.2.1",
+    "pinia": "^2.1.7",
     "typography": "^0.16.24",
     "vue3-markdown-it": "^1.0.10",
     "vuex": "^4.0.2",
+    "yarn": "^1.22.21",
     "zod": "^3.22.2"
   }
 }
