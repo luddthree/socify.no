@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@capacitor/cli": "^5.6.0",
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@tailwindcss/typography": "^0.5.9",
@@ -19,6 +20,9 @@
     "sass": "^1.69.3"
   },
   "dependencies": {
+    "@capacitor/android": "^5.6.0",
+    "@capacitor/core": "^5.6.0",
+    "@capacitor/ios": "^5.6.0",
     "@databases/sqlite": "^4.0.2",
     "@nuxtjs/tailwindcss": "^6.6.4",
     "@pinia/nuxt": "^0.5.1",
@@ -27,11 +31,13 @@
     "daisyui": "^2.52.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "global": "^4.4.0",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.1",
     "n": "^9.2.0",
     "nanoid": "^4.0.1",
+    "nuxi": "^3.10.0",
     "nuxt-storage": "^1.2.2",
     "nvm": "^0.0.4",
     "openai": "^3.2.1",

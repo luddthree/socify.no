@@ -1,0 +1,8 @@
+{
+  "appId": "com.example.app",
+  "appName": "socify-app",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
