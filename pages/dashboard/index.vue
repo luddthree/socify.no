@@ -394,6 +394,7 @@ const storedUsername = localStorage.getItem('username');
 
 <script lang="ts">
 export default {
+  middleware: 'auth',
   name: 'home',
   data() {
     return {

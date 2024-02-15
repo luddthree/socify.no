@@ -106,7 +106,6 @@
         } else {
             alert("Wrong username or password.")
         }
-        
       },
     },
   };
