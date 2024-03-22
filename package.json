@@ -12,14 +12,17 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "^6.8.0",
+    "@sidebase/nuxt-auth": "^0.6.7",
     "@tailwindcss/typography": "^0.5.9",
     "@types/express": "^4.17.21",
     "@types/multer": "^1.4.11",
     "nuxt": "^3.7.3",
+    "nuxt-auth-utils": "^0.0.18",
     "sass": "^1.69.3"
   },
   "dependencies": {
     "@databases/sqlite": "^4.0.2",
+    "@nuxtjs/auth-next": "^5.0.0-1667386184.dfbbb54",
     "@nuxtjs/tailwindcss": "^6.6.4",
     "@pinia/nuxt": "^0.5.1",
     "@vueuse/nuxt": "^9.13.0",
